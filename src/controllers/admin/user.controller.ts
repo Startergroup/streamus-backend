@@ -6,6 +6,15 @@ import fs from 'fs'
 class UserController {
   public async createCode ({ code }: code) {
     try {
+      const targetCode = await this.getCode(code as string)
+
+      if (targetCode) {
+        return {
+          success: false,
+          message: 'Такой код уже существует'
+        }
+      }
+
       await UserModel.create({
         code,
         name: null,
@@ -82,7 +91,7 @@ class UserController {
           }
         })
 
-        await this.createCodes(mapped_codes)
+        await this.createCodes(Array.from(new Set(mapped_codes)))
       } catch (error) {
         throw error
       }

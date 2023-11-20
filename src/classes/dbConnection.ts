@@ -9,7 +9,8 @@ class DBConnection {
       ...options,
       host: '127.0.0.1',
       dialect: 'postgres',
-      logging: (msg) => console.debug(msg)
+      // logging: (msg) => console.debug(msg)
+      logging: false
     })
     this.models = models
   }

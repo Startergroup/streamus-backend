@@ -29,14 +29,12 @@ dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
-// dotenv.config({
-//   path: '.env.production'
-// })
-
 const app = express()
 const port = Number(process.env.SERVER_PORT)
 
-app.use(cors())
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors())
+}
 
 app.use(file_upload({}))
 app.use(body_parser.json())

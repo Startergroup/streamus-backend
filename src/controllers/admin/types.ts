@@ -33,7 +33,8 @@ type admin = {
 type tab = {
   tab_id?: number,
   name: string,
-  url: string
+  url: string,
+  order: number
 }
 
 type code = {

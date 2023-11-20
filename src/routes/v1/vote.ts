@@ -1,9 +1,11 @@
 import PresentationController from '../../controllers/admin/presentation.controller'
 import VoteController from '../../controllers/admin/vote.controller'
 import VoteUserController from '../../controllers/translation/vote.controller'
+import Excel from 'exceljs'
 import type { presentation } from '../../controllers/admin/types'
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../constants'
+import { upload } from '../../utils/upload_file'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/vote`
@@ -110,6 +112,43 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     const response = await presentation_instance.createPresentations(mapped_presentations)
 
     res.json(response)
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: error
+    })
+  }
+})
+
+router.post(`${CURRENT_ROUTE}/import`, async (req: any, res: any) => {
+  try {
+    const { files } = req
+
+    if (!files || Object.keys(files).length === 0) {
+      return res.status(400).send({
+        success: false,
+        message: 'No files were uploaded'
+      })
+    }
+
+    const file = req.files.file
+    const path = `C:\\Users\\Maikl\\Desktop\\Startergroup\\Streamus apps\\admin-panel\\packages\\server\\public\\uploads\\${file.name}`
+
+    upload(file, path, async () => {
+      const workbook = new Excel.Workbook()
+
+      workbook.xlsx.readFile(path).then((sheet: any) => {
+        const worksheet = workbook.getWorksheet(sheet.worksheets[0].name)
+        // @ts-ignore
+        worksheet.eachRow({ includeEmpty: false }, function(row) {
+          const values = JSON.stringify(row.values)
+          console.debug(values)
+        });
+      })
+    })
+
+    // const workbook = new Excel.Workbook()
+    // const data = await workbook.xlsx.readFile(file)
   } catch (error) {
     res.status(400).send({
       success: false,

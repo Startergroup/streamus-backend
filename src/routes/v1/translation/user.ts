@@ -33,7 +33,6 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     }
 
     const response = await code_instance.createCode({ code })
-
     res.json(response)
   } catch (error) {
     res.status(400).send(error)
