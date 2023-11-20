@@ -23,6 +23,9 @@ class TabModel extends Model {
 
   @Column(DataTypes.STRING)
   url: string
+
+  @Column(DataTypes.INTEGER)
+  order: number
 }
 
 export default TabModel

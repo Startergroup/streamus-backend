@@ -6,11 +6,8 @@ import { ROUTES_VERSION } from '../../../constants'
 import AdminController from '../../../controllers/admin/admin.controller'
 
 dotenv.config({
-  path: '.env.development'
+  path: `.env.${process.env.NODE_ENV}`
 })
-// dotenv.config({
-//   path: '.env.production'
-// })
 
 const router = Router()
 const {

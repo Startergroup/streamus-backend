@@ -5,11 +5,8 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config({
-  path: '.env.development'
+  path: `.env.${process.env.NODE_ENV}`
 })
-// dotenv.config({
-//   path: '.env.production'
-// })
 
 const CURRENT_ROUTE = `${ROUTES_VERSION}/user`
 const router = Router()
@@ -18,12 +15,12 @@ const { USER_ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATIO
 
 router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   try {
-    const { code, name } = req.body
+    const { code, name, email } = req.body
 
-    if (!(code && name)) {
+    if (!(code && name && email)) {
       res.status(400).send({
         success: false,
-        message: 'Properties code and name are required.'
+        message: 'Properties code, name and email are required.'
       })
 
       return
@@ -34,7 +31,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
     if (!user) {
       res.json({
         success: false,
-        message: 'Проверьте, верный ли ключ вы ввели и нет ли в нем лишних знаков или пробелов.'
+        message: 'Проверьте корректность введенного ключа либо проверьте введенный ключ на отсутствие лишних знаков или пробелов.'
       })
 
       return
@@ -53,6 +50,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
       await user_instance.updateUserData({
         code_id,
         name,
+        email,
         last_activity: now,
         refresh_token
       })

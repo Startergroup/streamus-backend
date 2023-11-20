@@ -22,10 +22,9 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`${ROUTES_VERSION}/tabs`, async (_req: any, res: any) => {
+router.get(`${ROUTES_VERSION}/tabs`, async (_req: any, res :any) => {
   try {
     const tabs = await tab_instance.getTabs()
-
     res.json({
       success: true,
       data: tabs
@@ -37,16 +36,16 @@ router.get(`${ROUTES_VERSION}/tabs`, async (_req: any, res: any) => {
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { name, url } = req.body
+    const { name, url, order } = req.body
 
-    if (!(name && url)) {
+    if (!(name && url && order !== null)) {
       return res.status(400).send({
         success: false,
-        message: 'Properties name and url are required.'
+        message: 'Properties name, order and url are required.'
       })
     }
 
-    const response = await tab_instance.createTab({ name, url })
+    const response = await tab_instance.createTab({ name, url, order })
 
     res.json(response)
   } catch (error) {
@@ -56,16 +55,16 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { tab_id, name, url } = req.body
+    const { tab_id, name, url, order } = req.body
 
-    if (!(tab_id && name && url)) {
+    if (!(tab_id && name && url && order !== null)) {
       return res.status(400).send({
         success: false,
-        message: 'Properties tab_id, name and url are required.'
+        message: 'Properties tab_id, name, order and url are required.'
       })
     }
 
-    const response = await tab_instance.updateTab({ tab_id, name, url })
+    const response = await tab_instance.updateTab({ tab_id, name, url, order })
 
     res.json(response)
   } catch (error) {
