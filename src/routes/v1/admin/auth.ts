@@ -11,7 +11,7 @@ dotenv.config({
 
 const router = Router()
 const {
-  ADMIN_ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_SECRET,
   ADMIN_REFRESH_TOKEN_SECRET,
   ADMIN_TOKEN_DURATION
 } = process.env
@@ -66,7 +66,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
       })
     }
 
-    const access_token = jwt.sign({ login }, (ADMIN_ACCESS_TOKEN_SECRET as string), { expiresIn: ADMIN_TOKEN_DURATION })
+    const access_token = jwt.sign({ login }, (ACCESS_TOKEN_SECRET as string), { expiresIn: ADMIN_TOKEN_DURATION })
     const refresh_token = jwt.sign({ login }, (ADMIN_REFRESH_TOKEN_SECRET as string))
 
     refresh_tokens.push(refresh_token)
@@ -90,7 +90,7 @@ router.get(`${CURRENT_ROUTE}/check_token`, async (req: any, res: any) => {
   if (auth_header) {
     const token = auth_header.split(' ')[1]
 
-    jwt.verify(token, (ADMIN_ACCESS_TOKEN_SECRET as string), (error: any) => {
+    jwt.verify(token, (ACCESS_TOKEN_SECRET as string), (error: any) => {
       if (error) {
         return res.status(403).json({
           expired: true,

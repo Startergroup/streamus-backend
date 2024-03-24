@@ -10,14 +10,15 @@ class QuestionController {
     }
   }
 
-  async updateQuestion ({ quiz_id = null, question_id = null, content, img = null }: question) {
+  async updateQuestion ({ free_answer, quiz_id = null, question_id = null, content, img = null }: question) {
     try {
       if (!question_id) {
-        return await this.createQuestion([{ quiz_id, content, img, answers: [] }])
+        return await this.createQuestion([{ quiz_id, free_answer, content, img, answers: [] }])
       } else {
         const updated_question = await question_model.update({
           content,
-          img
+          img,
+          free_answer
         }, {
           returning: true,
           where: {

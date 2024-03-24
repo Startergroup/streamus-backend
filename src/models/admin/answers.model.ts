@@ -31,6 +31,9 @@ class AnswersModel extends Model {
   @Column(DataTypes.STRING)
   img: string
 
+  @Column(DataTypes.BOOLEAN)
+  is_free_answer: boolean
+
   @ForeignKey(() => QuestionModel)
   @Column(DataTypes.INTEGER)
   question_id: number

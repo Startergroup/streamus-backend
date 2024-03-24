@@ -179,6 +179,19 @@ class UserController {
 
   public async updateActivity (code: string) {
     try {
+      const user = await UserModel.findOne({
+        where: {
+          code
+        }
+      })
+
+      if (!user) {
+        return {
+          success: false,
+          message: 'User wasnt found'
+        }
+      }
+
       await UserModel.update({
         last_activity: Date.now()
       }, {
