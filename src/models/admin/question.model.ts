@@ -37,6 +37,9 @@ class QuestionModel extends Model {
   @BelongsTo(() => QuizModel)
   quiz: QuizModel
 
+  @Column(DataTypes.BOOLEAN)
+  free_answer: boolean
+
   @HasMany(() => AnswersModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',

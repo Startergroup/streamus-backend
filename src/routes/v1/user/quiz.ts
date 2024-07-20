@@ -3,6 +3,7 @@ import { ROUTES_VERSION } from '../../../constants'
 import QuizAdminController from '../../../controllers/admin/quiz.controller'
 import QuizTranslationController from '../../../controllers/translation/quiz.controller'
 import UserController from '../../../controllers/admin/user.controller'
+import sortByTimeAndPoints from '../../../utils/sortByTimeAndPoints'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/user/quiz`
@@ -40,7 +41,7 @@ router.get(`${CURRENT_ROUTE}/rate`, async (req: any, res: any) => {
       quiz.email = user?.dataValues.email
     }
 
-    res.json(quizzes)
+    res.json(quizzes.sort(sortByTimeAndPoints))
   } catch (error) {
     res.status(400).send({
       success: false,
