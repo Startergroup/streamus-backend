@@ -26,8 +26,11 @@ class QuizModel extends Model {
   @Column(DataTypes.BOOLEAN)
   is_active: boolean
 
-  @Column(DataTypes.STRING)
+  @Column(DataTypes.STRING(400))
   introduction_text: string
+
+  @Column(DataTypes.STRING)
+  introduction_img: string
 
   @Column(DataTypes.STRING)
   duration: string
@@ -37,6 +40,9 @@ class QuizModel extends Model {
 
   @Column(DataTypes.STRING)
   background: string
+
+  @Column(DataTypes.STRING(400))
+  agreement: string
 
   @HasMany(() => QuestionModel, {
     onUpdate: 'CASCADE',

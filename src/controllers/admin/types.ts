@@ -1,7 +1,9 @@
 type quiz = {
   name: string,
+  agreement: string,
   quiz_id?: number,
   introduction_text: string,
+  introduction_img: string,
   duration: number,
   logo: string,
   background: string
@@ -22,7 +24,7 @@ type answer = {
   content: string,
   img?: string | null,
   is_right: boolean,
-  free_answer?: boolean
+  is_free_answer?: boolean
 }
 
 type admin = {
@@ -36,7 +38,8 @@ type tab = {
   tab_id?: number,
   name: string,
   url: string,
-  order: number
+  order: number,
+  schedule?: string
 }
 
 type code = {
@@ -44,6 +47,7 @@ type code = {
   code?: string,
   name?: string,
   email?: string,
+  isGuest?: boolean,
   last_activity?: number | null,
   refresh_token?: string | null
 }

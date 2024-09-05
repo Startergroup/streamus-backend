@@ -26,6 +26,9 @@ class TabModel extends Model {
 
   @Column(DataTypes.INTEGER)
   order: number
+
+  @Column(DataTypes.STRING)
+  schedule: string
 }
 
 export default TabModel

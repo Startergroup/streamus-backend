@@ -2,12 +2,13 @@ import tab_model from '../../models/admin/tab.model'
 import type { tab } from './types'
 
 class TabController {
-  public async createTab ({ name, url, order }: tab) {
+  public async createTab ({ name, url, order, schedule }: tab) {
     try {
       await tab_model.create({
         name,
         url,
-        order
+        order,
+        schedule
       })
 
       return {
@@ -39,12 +40,13 @@ class TabController {
     }
   }
 
-  public async updateTab ({ tab_id, name, url, order }: tab) {
+  public async updateTab ({ tab_id, name, url, order, schedule }: tab) {
     try {
       await tab_model.update({
         name,
         url,
-        order
+        order,
+        schedule
       }, {
         returning: true,
         where: {

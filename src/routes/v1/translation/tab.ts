@@ -36,7 +36,7 @@ router.get(`${ROUTES_VERSION}/tabs`, async (_req: any, res :any) => {
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { name, url, order } = req.body
+    const { name, url, order, schedule } = req.body
 
     if (!(name && url && order !== null)) {
       return res.status(400).send({
@@ -45,7 +45,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await tab_instance.createTab({ name, url, order })
+    const response = await tab_instance.createTab({ name, url, order, schedule })
 
     res.json(response)
   } catch (error) {
@@ -55,7 +55,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { tab_id, name, url, order } = req.body
+    const { tab_id, name, url, order, schedule } = req.body
 
     if (!(tab_id && name && url && order !== null)) {
       return res.status(400).send({
@@ -64,7 +64,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await tab_instance.updateTab({ tab_id, name, url, order })
+    const response = await tab_instance.updateTab({ tab_id, name, url, order, schedule })
 
     res.json(response)
   } catch (error) {

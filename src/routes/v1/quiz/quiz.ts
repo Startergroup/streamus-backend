@@ -61,12 +61,12 @@ router.get(`${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
 })
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {
-  const { name, introduction_text, duration, logo, background, questions } = req.body
+  const { name, introduction_text, introduction_img = '', duration, logo = '', background, questions, agreement } = req.body
 
-  if (!(name && introduction_text && duration && logo && background && questions)) {
+  if (!(name && introduction_text && duration && background && questions && agreement)) {
     return res.status(400).send({
       success: false,
-      message: 'Properties name, introduction_text, duration, logo, background and questions are required.'
+      message: 'Properties name, introduction_text, duration, logo, background, introduction_img, agreement and questions are required.'
     })
   }
 
@@ -74,9 +74,11 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     const quiz: any = await quiz_instance.createQuiz({
       name,
       introduction_text,
+      introduction_img,
       duration,
       logo,
-      background
+      background,
+      agreement
     })
     const mapped_questions = questions.map((item: question) => {
       return {
@@ -114,12 +116,12 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
 })
 
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
-  const { name, quiz_id, introduction_text, duration, logo, background, questions } = req.body
+  const { name, quiz_id, introduction_text, introduction_img, duration, logo, agreement, background, questions } = req.body
 
-  if (!(name && introduction_text && duration && logo && background && questions)) {
+  if (!(name && introduction_text && introduction_img && duration && logo && background && agreement && questions)) {
     return res.status(400).send({
       success: false,
-      message: 'Properties introduction_text, duration, logo, background and questions are required.'
+      message: 'Properties introduction_text, introduction_img, duration, logo, agreement, background and questions are required.'
     })
   }
 
@@ -128,9 +130,11 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
       name,
       quiz_id,
       introduction_text,
+      introduction_img,
       duration,
       logo,
-      background
+      background,
+      agreement
     })
 
     await Promise.all(questions.map(async (question: question) => {

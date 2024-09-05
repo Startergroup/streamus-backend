@@ -10,7 +10,7 @@ class AnswerController {
     }
   }
 
-  async updateAnswer ({ content, answer_id = null, is_right, img = null, question_id }: answer) {
+  async updateAnswer ({ content, answer_id = null, is_right, img = null, question_id, is_free_answer }: answer) {
     try {
       if (answer_id) {
         return await answers_model.update({
@@ -29,7 +29,8 @@ class AnswerController {
             content,
             is_right,
             img,
-            question_id
+            question_id,
+            is_free_answer
           }
         ])
       }

@@ -15,12 +15,12 @@ const { ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATION } =
 
 router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   try {
-    const { code, name, email } = req.body
+    const { code, name, email, isGuest = false } = req.body
 
-    if (!(code && name && email)) {
+    if (!(code && name)) {
       res.status(400).send({
         success: false,
-        message: 'Properties code, name and email are required.'
+        message: 'Properties code and name are required.'
       })
 
       return
@@ -52,7 +52,8 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
         name,
         email,
         last_activity: now,
-        refresh_token
+        refresh_token,
+        isGuest
       })
 
       const updated_user = await user_instance.getCode(code)
@@ -74,6 +75,53 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
     }
   } catch (error) {
     res.status(400).send({
+      success: false,
+      message: error
+    })
+  }
+})
+
+router.post(`${CURRENT_ROUTE}/guest_login`, async (req: any, res: any) => {
+  try {
+    const { name, email, isGuest = true } = req.body
+
+
+    if (!(name && email)) {
+      res.status(400).send({
+        success: false,
+        message: 'Properties name and email are required.'
+      })
+
+      return
+    }
+
+    const getUserByEmail = await user_instance.getCodeByEmail(email)
+
+    if (getUserByEmail?.dataValues) {
+      res.json({
+        success: true,
+        message: '',
+        data: getUserByEmail?.dataValues
+      })
+
+      return
+    }
+
+    await user_instance.createGuestUser({
+      name,
+      email,
+      isGuest
+    })
+
+    const user = await user_instance.getCodeByEmail(email)
+
+    res.json({
+      success: true,
+      message: '',
+      data: user?.dataValues
+    })
+  } catch (error) {
+    res.status(401).send({
       success: false,
       message: error
     })

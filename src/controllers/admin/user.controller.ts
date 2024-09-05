@@ -4,11 +4,11 @@ import { UPLOAD_PATH } from '../../constants'
 import fs from 'fs'
 
 class UserController {
-  public async createCode ({ code }: code) {
+  public async createCode ({ code, name, email, isGuest = false }: code):Promise<{ success: boolean, message: string }> {
     try {
       const targetCode = await this.getCode(code as string)
 
-      if (targetCode) {
+      if (targetCode && !isGuest) {
         return {
           success: false,
           message: 'Такой код уже существует'
@@ -17,9 +17,38 @@ class UserController {
 
       await UserModel.create({
         code,
-        name: null,
-        email: null,
-        last_activity: null
+        name,
+        email,
+        last_activity: null,
+        isGuest
+      })
+
+      return {
+        success: true,
+        message: 'OK'
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async createGuestUser ({ name, email, isGuest }: { name: string, email: string, isGuest: boolean }) {
+    try {
+      const user = await this.getCodeByEmail(email)
+
+      if (user) {
+        return {
+          success: false,
+          message: 'Такой пользователь уже есть'
+        }
+      }
+
+      await UserModel.create({
+        code: '',
+        name,
+        email,
+        last_activity: null,
+        isGuest
       })
 
       return {
@@ -68,6 +97,18 @@ class UserController {
     }
   }
 
+  public async getCodeByEmail (email: string) {
+    try {
+      return await UserModel.findOne({
+        where: {
+          email
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async getCodes () {
     try {
       return await UserModel.findAll()
@@ -87,7 +128,8 @@ class UserController {
           return {
             code: item,
             last_activity: null,
-            is_online: false
+            is_online: false,
+            isGuest: false
           }
         })
 

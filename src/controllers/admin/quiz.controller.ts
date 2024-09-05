@@ -57,14 +57,16 @@ class QuizController {
     }
   }
 
-  async createQuiz ({ name, introduction_text, duration, logo, background }: quiz) {
+  async createQuiz ({ name, introduction_text, introduction_img, duration, agreement, logo, background }: quiz) {
     try {
       return await QuizModel.create({
         name,
         introduction_text,
+        introduction_img,
         duration,
         logo,
-        background
+        background,
+        agreement
       })
     } catch (error) {
       throw error
@@ -102,13 +104,15 @@ class QuizController {
     }
   }
 
-  async updateQuiz ({ quiz_id, introduction_text, duration, logo, background }: quiz) {
+  async updateQuiz ({ quiz_id, introduction_text, introduction_img, agreement, duration, logo, background }: quiz) {
     try {
       await QuizModel.update({
         introduction_text,
+        introduction_img,
         duration,
         logo,
-        background
+        background,
+        agreement
       }, {
         returning: true,
         where: {

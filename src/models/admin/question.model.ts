@@ -24,7 +24,7 @@ class QuestionModel extends Model {
   @Column(DataTypes.INTEGER)
   question_id: number
 
-  @Column(DataTypes.STRING)
+  @Column(DataTypes.STRING(400))
   content: string
 
   @Column(DataTypes.STRING)

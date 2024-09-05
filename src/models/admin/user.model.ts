@@ -27,6 +27,9 @@ class UserModel extends Model {
   @Column(DataTypes.STRING)
   email: string
 
+  @Column(DataTypes.BOOLEAN)
+  isGuest: boolean
+
   @Column(DataTypes.STRING)
   access_token: string
 

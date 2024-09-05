@@ -8,7 +8,8 @@ class QuizController {
     try {
       const is_passed = await QuizModel.findOne({
         where: {
-          user_id
+          user_id,
+          quiz_id
         }
       })
 
