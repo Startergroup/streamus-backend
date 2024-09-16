@@ -1,0 +1,13 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_pull:
+    name: run pull
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: connect and pull
+        run: ssh ${{ secrets.USER_PROD }}@${{ secrets.HOST_PROD }} "cd ${{ secrets.WORKDIR_PROD }} && git checkout master && git pull && exit"
