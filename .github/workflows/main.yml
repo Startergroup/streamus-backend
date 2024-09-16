@@ -9,5 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: install ssh keys
+        run:
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PROD }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.HOST_PROD }} > ~/.ssh/known_hosts
+
       - name: connect and pull
         run: ssh ${{ secrets.USER_PROD }}@${{ secrets.HOST_PROD }} "cd ${{ secrets.WORKDIR_PROD }} && git checkout master && git pull && exit"
+
+      - name: cleanup
+        run: rm -rf ~/.ssh
