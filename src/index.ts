@@ -36,6 +36,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors())
 }
 
+console.debug(process.env.POSTGRES_PORT)
+
 app.use(file_upload({}))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
