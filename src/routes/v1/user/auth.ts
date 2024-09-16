@@ -8,12 +8,12 @@ dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
-const CURRENT_ROUTE = `${ROUTES_VERSION}/user`
+const CURRENT_ROUTE = `api/${ROUTES_VERSION}/user`
 const router = Router()
 const user_instance = new UserController()
 const { ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATION } = process.env
 
-router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
+router.post(`api/${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   try {
     const { code, name, email } = req.body
 
@@ -80,7 +80,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   }
 })
 
-router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
+router.put(`api/${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
   try {
     const { code } = req.body
 
@@ -108,7 +108,7 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
   }
 })
 
-router.post(`${CURRENT_ROUTE}/refresh_token`, async (req: any, res: any) => {
+router.post(`api/${CURRENT_ROUTE}/refresh_token`, async (req: any, res: any) => {
   try {
     const { refresh_token, code } = req.body
 

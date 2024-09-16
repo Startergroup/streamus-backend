@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
 import VoteController from '../../../controllers/translation/vote.controller'
 
-const CURRENT_ROUTE = `${ROUTES_VERSION}/user/vote`
+const CURRENT_ROUTE = `api/${ROUTES_VERSION}/user/vote`
 const router = Router()
 const vote_instance = new VoteController()
 

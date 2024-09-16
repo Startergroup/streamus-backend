@@ -11,7 +11,7 @@ import UserController from '../../../controllers/admin/user.controller'
 import sortByTimeAndPoints from '../../../utils/sortByTimeAndPoints'
 
 const router = Router()
-const CURRENT_ROUTE = `${ROUTES_VERSION}/quiz`
+const CURRENT_ROUTE = `api/${ROUTES_VERSION}/quiz`
 
 const answer_instance = new AnswerController()
 const quiz_instance = new QuizController()
@@ -44,7 +44,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
+router.get(`api/${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
   try {
     const quizzes = await quiz_instance.getQuizzes()
 
@@ -197,7 +197,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.delete(`${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
+router.delete(`api/${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
   try {
     await quiz_instance.deleteQuizzes()
 

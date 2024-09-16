@@ -5,10 +5,10 @@ import { upload } from '../../../utils/upload_file'
 import fs from "fs";
 
 const router = Router()
-const CURRENT_ROUTE = `${ROUTES_VERSION}/code`
+const CURRENT_ROUTE = `api/${ROUTES_VERSION}/code`
 const code_instance = new UserController()
 
-router.get(`${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
+router.get(`api/${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
   try {
     const codes = await code_instance.getCodes()
 
@@ -39,7 +39,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.post(`${ROUTES_VERSION}/codes`, async (req: any, res: any) => {
+router.post(`api/${ROUTES_VERSION}/codes`, async (req: any, res: any) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded')
   }
@@ -75,7 +75,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.put(`${CURRENT_ROUTE}/user`, async (req: any, res: any) => {
+router.put(`api/${CURRENT_ROUTE}/user`, async (req: any, res: any) => {
   try {
     const { code_id, name, email } = req.body
 
@@ -114,7 +114,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.delete(`${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
+router.delete(`api/${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
   try {
     const response = await code_instance.deleteCodes()
 
@@ -124,7 +124,7 @@ router.delete(`${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
   }
 })
 
-router.post(`${ROUTES_VERSION}/codes/import`, async (req: any, res: any) => {
+router.post(`api/${ROUTES_VERSION}/codes/import`, async (req: any, res: any) => {
   try {
     const { files } = req
 
