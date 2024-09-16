@@ -12,7 +12,7 @@ jobs:
       - name: install ssh keys
         run:
           install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PROD }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_PROD }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.HOST_PROD }} > ~/.ssh/known_hosts
 
       - name: connect and pull
