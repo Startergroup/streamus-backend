@@ -2,7 +2,8 @@ type answer = {
   id: number,
   user_id: number,
   question_id: number,
-  answer_id: number
+  answer_id: number,
+  value?: string|number
 }
 
 type quiz = {

@@ -29,18 +29,30 @@ dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
-// dotenv.config({
-//   path: '.env.production'
-// })
-
 const app = express()
 const port = Number(process.env.SERVER_PORT)
 
-app.use(cors())
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors())
+}
 
 app.use(file_upload({}))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
+
+// const verifyJWT = require('./middlewares/verifyJWT')
+// const { ACCESS_TOKEN_SECRET } = process.env
+
+// Дикий костыль, так как мне было впадлу думать над регуляркой
+// app.use('/v1/answer', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/question', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/quiz', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/tab', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/tabs', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/code', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/file', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/presentation', verifyJWT(ACCESS_TOKEN_SECRET))
+// app.use('/v1/vote', verifyJWT(ACCESS_TOKEN_SECRET))
 
 app.use(admin_auth_route)
 app.use(admin_answer_route)

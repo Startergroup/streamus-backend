@@ -8,6 +8,8 @@ import QuestionController from '../../../controllers/admin/question.controller'
 import UserQuizController from '../../../controllers/translation/quiz.controller'
 import UserController from '../../../controllers/admin/user.controller'
 
+import sortByTimeAndPoints from '../../../utils/sortByTimeAndPoints'
+
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/quiz`
 
@@ -86,8 +88,8 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     const answers = questions.map((item: question) => {
       return item.answers
     })
-    const mapped_answers = answers.map((answers: answer[], index: number) => {
-      return answers.map((answer: answer) => {
+    const mapped_answers = answers.map((item: answer|answer[], index: number) => {
+      return (item as answer[]).map((answer: answer) => {
         return {
           ...answer,
           question_id: added_questions[index].dataValues.question_id
@@ -223,11 +225,12 @@ router.get(`${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
 
       (quiz as any).username = user?.dataValues.name;
       (quiz as any).email = user?.dataValues.email;
+      (quiz as any).code = user?.dataValues.code;
     }
 
     res.json({
       success: true,
-      data: mapped_quizzes
+      data: mapped_quizzes.sort(sortByTimeAndPoints)
     })
   } catch (error) {
     res.status(400).send({

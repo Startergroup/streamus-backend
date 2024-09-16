@@ -12,7 +12,8 @@ type question = {
   quiz_id?: number | null
   content: string,
   img?: string | null,
-  answers: answer[]
+  answers: answer[],
+  free_answer: boolean
 }
 
 type answer = {
@@ -20,7 +21,8 @@ type answer = {
   question_id?: number,
   content: string,
   img?: string | null,
-  is_right: boolean
+  is_right: boolean,
+  free_answer?: boolean
 }
 
 type admin = {
@@ -33,7 +35,8 @@ type admin = {
 type tab = {
   tab_id?: number,
   name: string,
-  url: string
+  url: string,
+  order: number
 }
 
 type code = {

@@ -28,7 +28,7 @@ class UserModel extends Model {
   email: string
 
   @Column(DataTypes.STRING)
-  refresh_token: string
+  access_token: string
 
   @Column(DataTypes.DATE)
   last_activity: Date

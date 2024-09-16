@@ -5,25 +5,22 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 dotenv.config({
-  path: '.env.development'
+  path: `.env.${process.env.NODE_ENV}`
 })
-// dotenv.config({
-//   path: '.env.production'
-// })
 
 const CURRENT_ROUTE = `${ROUTES_VERSION}/user`
 const router = Router()
 const user_instance = new UserController()
-const { USER_ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATION } = process.env
+const { ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATION } = process.env
 
 router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   try {
-    const { code, name } = req.body
+    const { code, name, email } = req.body
 
-    if (!(code && name)) {
+    if (!(code && name && email)) {
       res.status(400).send({
         success: false,
-        message: 'Properties code and name are required.'
+        message: 'Properties code, name and email are required.'
       })
 
       return
@@ -34,7 +31,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
     if (!user) {
       res.json({
         success: false,
-        message: 'Проверьте, верный ли ключ вы ввели и нет ли в нем лишних знаков или пробелов.'
+        message: 'Проверьте корректность введенного ключа либо проверьте введенный ключ на отсутствие лишних знаков или пробелов.'
       })
 
       return
@@ -47,12 +44,13 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
 
     if (Date.now() - last_activity >= timeout || last_activity === null) {
       const now = Date.now()
-      const access_token = jwt.sign({}, USER_ACCESS_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION})
+      const access_token = jwt.sign({}, ACCESS_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION})
       const refresh_token = jwt.sign({}, USER_REFRESH_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION })
 
       await user_instance.updateUserData({
         code_id,
         name,
+        email,
         last_activity: now,
         refresh_token
       })
@@ -95,14 +93,15 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
       return
     }
 
-    await user_instance.updateActivity(code)
+    const response = await user_instance.updateActivity(code)
 
-    res.json({
-      success: true,
-      message: 'OK'
-    })
+    if (response.success) {
+      res.json(response)
+    } else {
+      res.status(403).send(response)
+    }
   } catch (error) {
-    res.status(400).send({
+    res.status(401).send({
       success: false,
       message: error
     })
@@ -126,7 +125,7 @@ router.post(`${CURRENT_ROUTE}/refresh_token`, async (req: any, res: any) => {
     const is_valid_refresh_token = user.refresh_token === refresh_token
 
     if (is_valid_refresh_token) {
-      const access_token = jwt.sign({}, USER_ACCESS_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION})
+      const access_token = jwt.sign({}, ACCESS_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION})
       const refresh_token = jwt.sign({}, USER_REFRESH_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION })
       // 60min
       const expires = 60 * 60 * 1000
