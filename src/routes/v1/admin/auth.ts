@@ -16,7 +16,7 @@ const {
   ADMIN_TOKEN_DURATION
 } = process.env
 const refresh_tokens = []
-const CURRENT_ROUTE = `${ROUTES_VERSION}/admin`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/admin`
 const admin_instance = new AdminController()
 
 router.post(`${CURRENT_ROUTE}/check_user`, async (req: any, res: any) => {

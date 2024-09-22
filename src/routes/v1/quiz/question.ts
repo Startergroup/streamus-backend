@@ -4,7 +4,7 @@ import { ROUTES_VERSION } from '../../../constants'
 import QuestionController from '../../../controllers/admin/question.controller'
 
 const router = Router()
-const CURRENT_ROUTE = `${ROUTES_VERSION}/question`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/question`
 
 const question_instance = new QuestionController()
 
