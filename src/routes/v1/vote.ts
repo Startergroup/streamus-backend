@@ -8,12 +8,12 @@ import { ROUTES_VERSION } from '../../constants'
 import { upload } from '../../utils/upload_file'
 
 const router = Router()
-const CURRENT_ROUTE = `api/${ROUTES_VERSION}/vote`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/vote`
 const presentation_instance = new PresentationController()
 const vote_instance = new VoteController()
 const vote_user_instance = new VoteUserController()
 
-router.get(`api/${ROUTES_VERSION}/votes`, async (req: any, res: any) => {
+router.get(`/api/${ROUTES_VERSION}/votes`, async (req: any, res: any) => {
   try {
     const { tab_id } = req.query
 
@@ -57,7 +57,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`api/${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
+router.get(`/api/${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
   try {
     const { vote_id } = req.query
 
@@ -120,7 +120,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.post(`api/${CURRENT_ROUTE}/import`, async (req: any, res: any) => {
+router.post(`/api/${CURRENT_ROUTE}/import`, async (req: any, res: any) => {
   try {
     const { files } = req
 

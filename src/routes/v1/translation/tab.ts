@@ -4,7 +4,9 @@ import { ROUTES_VERSION } from '../../../constants'
 import TabController from '../../../controllers/admin/tab.controller'
 
 const router = Router()
-const CURRENT_ROUTE = `api/${ROUTES_VERSION}/tab`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/tab`
+
+console.debug(CURRENT_ROUTE)
 
 const tab_instance = new TabController()
 
@@ -22,7 +24,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`api/${ROUTES_VERSION}/tabs`, async (_req: any, res :any) => {
+router.get(`/api/${ROUTES_VERSION}/tabs`, async (_req: any, res :any) => {
   try {
     const tabs = await tab_instance.getTabs()
     res.json({

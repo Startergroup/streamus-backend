@@ -3,7 +3,7 @@ import { ROUTES_VERSION } from '../../constants'
 import { UPLOAD_PATH } from '../../constants'
 import { upload } from '../../utils/upload_file'
 
-const CURRENT_ROUTE = `api/${ROUTES_VERSION}/file`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/file`
 const router = Router()
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {

@@ -6,7 +6,7 @@ import UserController from '../../../controllers/admin/user.controller'
 import sortByTimeAndPoints from '../../../utils/sortByTimeAndPoints'
 
 const router = Router()
-const CURRENT_ROUTE = `api/${ROUTES_VERSION}/user/quiz`
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/user/quiz`
 const quiz_admin_instance = new QuizAdminController()
 const quiz_translation_instance = new QuizTranslationController()
 const user_instance = new UserController()
@@ -28,7 +28,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`api/${CURRENT_ROUTE}/rate`, async (req: any, res: any) => {
+router.get(`/api/${CURRENT_ROUTE}/rate`, async (req: any, res: any) => {
   try {
     const { quiz_id } = req.query
     const quizzes = await quiz_translation_instance.getQuizzes(quiz_id)
