@@ -36,6 +36,8 @@ class DBConnection {
     try {
       this.appendModels()
       await this.connect()
+
+      console.debug('Database initialized')
     } catch (error) {
       console.error(error)
     }
