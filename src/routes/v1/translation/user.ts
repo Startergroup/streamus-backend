@@ -75,7 +75,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.put(`/api/${CURRENT_ROUTE}/user`, async (req: any, res: any) => {
+router.put(`${CURRENT_ROUTE}/user`, async (req: any, res: any) => {
   try {
     const { code_id, name, email } = req.body
 

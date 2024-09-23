@@ -28,7 +28,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`/api/${CURRENT_ROUTE}/rate`, async (req: any, res: any) => {
+router.get(`${CURRENT_ROUTE}/rate`, async (req: any, res: any) => {
   try {
     const { quiz_id } = req.query
     const quizzes = await quiz_translation_instance.getQuizzes(quiz_id)

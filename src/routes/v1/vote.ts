@@ -57,7 +57,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.get(`/api/${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
+router.get(`${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
   try {
     const { vote_id } = req.query
 
@@ -120,7 +120,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.post(`/api/${CURRENT_ROUTE}/import`, async (req: any, res: any) => {
+router.post(`${CURRENT_ROUTE}/import`, async (req: any, res: any) => {
   try {
     const { files } = req
 
