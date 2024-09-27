@@ -1,8 +1,8 @@
 on: workflow_dispatch
 
 jobs:
-  run_pull:
-    name: run pull
+  deploy_prod:
+    name: Deploy to prod
     runs-on: ubuntu-latest
 
     steps:
