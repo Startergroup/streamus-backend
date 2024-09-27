@@ -1,24 +1,7 @@
 on: workflow_dispatch
 
 jobs:
-  deploy_dev:
-    name: Deploy to dev
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: install ssh keys
-        run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_DEV }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.HOST_DEV }} > ~/.ssh/known_hosts
-
-      - name: connect and pull
-        run: ssh ${{ secrets.USER_DEV }}@${{ secrets.HOST_DEV }} "cd ${{ secrets.WORKDIR_DEV }} && git checkout master && git pull && pm2 restart ts-node && exit"
-
-      - name: cleanup
-        run: rm -rf ~/.ssh
-
-  deploy_prod:
+  deploy:
     name: Deploy to prod
     runs-on: ubuntu-latest
 
