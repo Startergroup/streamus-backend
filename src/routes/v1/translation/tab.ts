@@ -6,8 +6,6 @@ import TabController from '../../../controllers/admin/tab.controller'
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/tab`
 
-console.debug(CURRENT_ROUTE)
-
 const tab_instance = new TabController()
 
 router.get(CURRENT_ROUTE, async (req: any, res: any) => {
