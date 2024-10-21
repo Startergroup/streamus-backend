@@ -31,6 +31,7 @@ class VoteController {
       if (!votes) {
         return {
           success: false,
+          data: {},
           message: 'There are no votes.'
         }
       }
@@ -42,13 +43,15 @@ class VoteController {
       })
 
       return {
-        ...votes,
-        presentations: votes.presentations.map((element: any) => {
-          return {
-            ...element.dataValues,
-            is_like: user_votes.some(user_vote => user_vote.presentation_id === element.presentation_id && user_vote.like)
-          }
-        })
+        data: {
+          ...votes,
+          presentations: votes.presentations.map((element: any) => {
+            return {
+              ...element.dataValues,
+              is_like: user_votes.some(user_vote => user_vote.presentation_id === element.presentation_id && user_vote.like)
+            }
+          })
+        }
       }
     } catch (error) {
       throw error
