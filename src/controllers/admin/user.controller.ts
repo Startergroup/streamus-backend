@@ -209,6 +209,32 @@ class UserController {
       throw error
     }
   }
+
+  public async generateCodes (key_count: number, key_length: number) {
+    try {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      const uniqueKeys = new Set()
+
+      while (uniqueKeys.size < key_count) {
+        let key:string = '';
+
+        for (let i = 0; i < key_length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          key += characters[randomIndex];
+        }
+
+        uniqueKeys.add({
+          code: key,
+          last_activity: null,
+          is_online: false
+        });
+      }
+
+      await this.createCodes((Array.from(uniqueKeys) as unknown as any))
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default UserController

@@ -165,4 +165,14 @@ router.post(`/api/${ROUTES_VERSION}/codes/import`, async (req: any, res: any) =>
   }
 })
 
+router.get(`/api/${ROUTES_VERSION}/codes/generate`, async (req: any, res: any) => {
+  const { key_count, key_length } = req.query
+
+  await code_instance.generateCodes(key_count, key_length)
+
+  res.json({
+    success: true
+  })
+})
+
 export default router
