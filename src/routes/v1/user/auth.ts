@@ -110,7 +110,7 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
         message: 'Result block success false'
       })
 
-      return res.status(403).json(response)
+      return res.json(response)
     }
   } catch (error) {
     console.debug({
