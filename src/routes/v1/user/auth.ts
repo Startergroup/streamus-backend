@@ -93,7 +93,13 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
       return
     }
 
+    console.debug({
+      code
+    })
+
     const response = await user_instance.updateActivity(code)
+
+    console.debug(response)
 
     if (response.success) {
       res.json(response)
