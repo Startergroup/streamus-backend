@@ -90,17 +90,33 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
         message: 'User wasn\'t found.'
       })
 
+      console.debug({
+        message: 'If block'
+      })
+
       return
     }
 
     const response = await user_instance.updateActivity(code)
 
     if (response.success) {
-      res.json(response)
+      console.debug({
+        message: 'Result block success true'
+      })
+
+      return res.json(response)
     } else {
-      res.status(403).json(response)
+      console.debug({
+        message: 'Result block success false'
+      })
+
+      return res.status(403).json(response)
     }
   } catch (error) {
+    console.debug({
+      message: 'Catch block'
+    })
+
     res.status(401).json({
       success: false,
       message: error
