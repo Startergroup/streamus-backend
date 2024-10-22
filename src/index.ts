@@ -40,13 +40,6 @@ app.use(file_upload({}))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 
-app.use((_req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://streamus.ru'); // или укажите конкретный источник
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Authorization,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type');
-  next();
-})
-
 // const verifyJWT = require('./middlewares/verifyJWT')
 // const { ACCESS_TOKEN_SECRET } = process.env
 
