@@ -80,7 +80,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   }
 })
 
-router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
+router.post(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
   try {
     const { code } = req.body
 
