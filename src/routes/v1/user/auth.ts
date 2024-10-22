@@ -85,7 +85,7 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
     const { code } = req.body
 
     if (!code) {
-      res.status(404).json({
+      res.status(401).json({
         success: false,
         message: 'User wasn\'t found.'
       })
@@ -98,7 +98,7 @@ router.put(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
     if (response.success) {
       return res.json(response)
     } else {
-      return res.status(404).json(response)
+      return res.status(401).json(response)
     }
   } catch (error) {
     res.status(500).json({
