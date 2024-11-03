@@ -31,6 +31,34 @@ class UserController {
     }
   }
 
+  public async createGuestUser ({ name, email, isGuest }: { name: string, email: string, isGuest: boolean }) {
+    try {
+      const user = await this.getCodeByEmail(email)
+
+      if (user) {
+        return {
+          success: false,
+          message: 'Такой пользователь уже есть'
+        }
+      }
+
+      await UserModel.create({
+        code: '',
+        name,
+        email,
+        last_activity: null,
+        isGuest
+      })
+
+      return {
+        success: true,
+        message: 'OK'
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async createCodes (codes: code[]) {
     try {
       await UserModel.bulkCreate(codes)
@@ -61,6 +89,18 @@ class UserController {
       return await UserModel.findOne({
         where: {
           code_id
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async getCodeByEmail (email: string) {
+    try {
+      return await UserModel.findOne({
+        where: {
+          email
         }
       })
     } catch (error) {
