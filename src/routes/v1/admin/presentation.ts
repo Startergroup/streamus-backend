@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../constants'
-import PresentationController from '../../controllers/admin/presentation.controller'
+import { ROUTES_VERSION } from '../../../constants'
+import PresentationController from '../../../controllers/admin/presentation.controller'
 
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/presentation`
 const router = Router()

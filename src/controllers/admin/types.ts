@@ -70,14 +70,31 @@ type presentation = {
   vote_id?: number
 }
 
+type schedule = {
+  date: number
+}
+
+type lecture = {
+  city?: string,
+  company?: string,
+  start: number,
+  end: number,
+  fio?: string,
+  name: string,
+  section_name: string,
+  section_id: number
+}
+
 export {
   admin,
   answer,
   code,
+  lecture,
   quiz,
   question,
   presentation,
   settings,
+  schedule,
   tab,
   vote
 }

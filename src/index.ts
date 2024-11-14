@@ -11,19 +11,21 @@ import AdminModels from './models/admin/index'
 import TranslationModels from './models/translation/index'
 
 import admin_auth_route from './routes/v1/admin/auth'
-import admin_answer_route from './routes/v1/quiz/answer'
+import admin_answer_route from './routes/v1/admin/answer'
 import admin_code_route from './routes/v1/translation/user'
-import admin_file_route from './routes/v1/file'
-import admin_quiz_route from './routes/v1/quiz/quiz'
-import admin_question_route from './routes/v1/quiz/question'
-import admin_presentation_route from './routes/v1/presentation'
+import admin_file_route from './routes/v1/admin/file'
+import admin_quiz_route from './routes/v1/admin/quiz'
+import admin_question_route from './routes/v1/admin/question'
+import admin_presentation_route from './routes/v1/admin/presentation'
 import admin_settings_route from './routes/v1/translation/settings'
 import admin_tab_route from './routes/v1/translation/tab'
-import admin_user_auth_route from './routes/v1/user/auth'
-import admin_vote_route from './routes/v1/vote'
+import admin_user_auth_route from './routes/v1/translation/auth'
+import admin_vote_route from './routes/v1/admin/vote'
 
-import user_quiz_route from './routes/v1/user/quiz'
-import user_vote_route from './routes/v1/user/vote'
+import admin_schedule_route from './routes/v1/admin/schedule'
+
+import user_quiz_route from './routes/v1/translation/quiz'
+import user_vote_route from './routes/v1/translation/vote'
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
@@ -65,6 +67,7 @@ app.use(admin_settings_route)
 app.use(admin_tab_route)
 app.use(admin_user_auth_route)
 app.use(admin_vote_route)
+app.use(admin_schedule_route)
 
 app.use(user_quiz_route)
 app.use(user_vote_route)

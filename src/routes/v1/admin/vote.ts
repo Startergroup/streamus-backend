@@ -1,11 +1,11 @@
-import PresentationController from '../../controllers/admin/presentation.controller'
-import VoteController from '../../controllers/admin/vote.controller'
-import VoteUserController from '../../controllers/translation/vote.controller'
+import PresentationController from '../../../controllers/admin/presentation.controller'
+import VoteController from '../../../controllers/admin/vote.controller'
+import VoteUserController from '../../../controllers/translation/vote.controller'
 import Excel from 'exceljs'
-import type { presentation } from '../../controllers/admin/types'
+import type { presentation } from '../../../controllers/admin/types'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../constants'
-import { upload } from '../../utils/upload_file'
+import { ROUTES_VERSION } from '../../../constants'
+import { upload } from '../../../utils/upload_file'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/vote`
