@@ -266,7 +266,8 @@ class UserController {
         uniqueKeys.add({
           code: key,
           last_activity: null,
-          is_online: false
+          is_online: false,
+          isGuest: false
         });
       }
 

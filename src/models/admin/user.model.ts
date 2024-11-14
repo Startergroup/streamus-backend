@@ -30,6 +30,9 @@ class UserModel extends Model {
   @Column(DataTypes.STRING)
   access_token: string
 
+  @Column(DataTypes.BOOLEAN)
+  isGuest: boolean
+
   @Column(DataTypes.DATE)
   last_activity: Date
 }
