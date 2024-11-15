@@ -21,8 +21,8 @@ class ScheduleModel extends Model {
   @Column(DataTypes.INTEGER)
   schedule_id: number
 
-  @Column(DataTypes.INTEGER)
-  date: number
+  @Column(DataTypes.DATEONLY)
+  date: string
 
   @HasMany(() => LectureModel, {
     onUpdate: 'CASCADE',

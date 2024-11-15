@@ -71,18 +71,19 @@ type presentation = {
 }
 
 type schedule = {
-  date: number
+  date: Date
 }
 
 type lecture = {
   city?: string,
   company?: string,
-  start: number,
-  end: number,
+  start: any,
+  end: any,
   fio?: string,
   name: string,
   section_name: string,
-  section_id: number
+  section_id: number,
+  lecture_id?: number
 }
 
 export {

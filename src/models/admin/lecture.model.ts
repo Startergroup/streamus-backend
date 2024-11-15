@@ -34,16 +34,16 @@ class LectureModel extends Model {
   @Column(DataTypes.STRING)
   company: string
 
-  @Column(DataTypes.INTEGER)
-  start: number
+  @Column(DataTypes.DATE)
+  start: string
 
-  @Column(DataTypes.INTEGER)
-  end: number
+  @Column(DataTypes.DATE)
+  end: string
 
   @Column(DataTypes.STRING)
   fio: string
 
-  @Column(DataTypes.INTEGER)
+  @Column(DataTypes.STRING)
   section_name: string
 
   @Column(DataTypes.INTEGER)
