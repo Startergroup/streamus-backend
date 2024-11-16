@@ -71,7 +71,10 @@ type presentation = {
 }
 
 type schedule = {
-  date: Date
+  date: Date,
+  section_name: string,
+  section_id: number
+  schedule_id?: number
 }
 
 type lecture = {
@@ -81,8 +84,6 @@ type lecture = {
   end: any,
   fio?: string,
   name: string,
-  section_name: string,
-  section_id: number,
   lecture_id?: number
 }
 

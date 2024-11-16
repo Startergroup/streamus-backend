@@ -24,6 +24,12 @@ class ScheduleModel extends Model {
   @Column(DataTypes.DATEONLY)
   date: string
 
+  @Column(DataTypes.INTEGER)
+  section_id: number
+
+  @Column(DataTypes.STRING)
+  section_name: string
+
   @HasMany(() => LectureModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',

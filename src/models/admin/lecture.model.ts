@@ -42,12 +42,6 @@ class LectureModel extends Model {
 
   @Column(DataTypes.STRING)
   fio: string
-
-  @Column(DataTypes.STRING)
-  section_name: string
-
-  @Column(DataTypes.INTEGER)
-  section_id: number
 }
 
 export default LectureModel

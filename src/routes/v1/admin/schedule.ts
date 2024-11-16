@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import type { schedule, lecture } from '../../../controllers/admin/types'
+import type { lecture } from '../../../controllers/admin/types'
 import ScheduleController from '../../../controllers/admin/schedule.controller'
 
 const router = Router()
@@ -24,30 +24,68 @@ router.get(`/api/${ROUTES_VERSION}/schedules`, async (_req: any, res: any) => {
 })
 
 router.get(CURRENT_ROUTE, async (req: any, res: any) => {
-  const { id } = req.query
+  try {
+    const { id } = req.query
 
-  if (!id) {
+    if (!id) {
+      res.json({
+        success: false,
+        message: 'Property id is required.'
+      })
+
+      return
+    }
+
+    const schedule = await schedule_instance.getScheduleById(id)
+
+    res.json({
+      success: true,
+      schedule
+    })
+  } catch (error) {
     res.json({
       success: false,
-      message: 'Property id is required.'
+      message: error
     })
-
-    return
   }
+})
 
-  const schedule = await schedule_instance.getScheduleById(id)
+router.get(`/api/${ROUTES_VERSION}/schedule-by-section`, async (req: any, res: any) => {
+  try {
+    const { id } = req.query
 
-  res.json({
-    success: true,
-    schedule
-  })
+    if (!id) {
+      res.json({
+        success: false,
+        message: 'Property id is required.'
+      })
+
+      return
+    }
+
+    const schedule = await schedule_instance.getScheduleBySectionId(id)
+
+    res.json({
+      success: true,
+      schedule
+    })
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error
+    })
+  }
 })
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { date, lectures }: { date: schedule, lectures: lecture[] } = req.body
+    const { date, section_name, section_id, lectures } = req.body
 
-    const { schedule_id = 0 } = (await schedule_instance.createSchedule(date))?.dataValues || {}
+    const { schedule_id = 0 } = (await schedule_instance.createSchedule({
+      date,
+      section_id,
+      section_name
+    }))?.dataValues || {}
     const mapped_lectures = lectures.map(
       (item: lecture) => ({
         ...item,
@@ -70,8 +108,8 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { schedule_id, date, lectures }: { schedule_id: number, date: schedule, lectures: lecture[] } = req.body
-    await schedule_instance.updateSchedule(schedule_id, date, lectures)
+    const { schedule_id, date, section_name, section_id, lectures } = req.body
+    await schedule_instance.updateSchedule({ schedule_id, date, section_name, section_id }, lectures)
 
     res.json({
       success: true
@@ -85,35 +123,49 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
 })
 
 router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
-  const { id } = req.body
+  try {
+    const { id } = req.body
 
-  if (!id) {
+    if (!id) {
+      res.json({
+        success: false,
+        message: 'Property id is required.'
+      })
+
+      return
+    }
+
+    await schedule_instance.deleteSchedule(id)
+    res.json({ success: true })
+  } catch (error) {
     res.json({
       success: false,
-      message: 'Property id is required.'
+      message: error
     })
-
-    return
   }
-
-  await schedule_instance.deleteSchedule(id)
-  res.json({ success: true })
 })
 
 router.delete(`/api/${ROUTES_VERSION}/lecture`, async (req: any, res: any) => {
-  const { id } = req.body
+  try {
+    const { id } = req.body
 
-  if (!id) {
+    if (!id) {
+      res.json({
+        success: false,
+        message: 'Property id is required.'
+      })
+
+      return
+    }
+
+    await schedule_instance.deleteLecture(id)
+    res.json({ success: true })
+  } catch (error) {
     res.json({
       success: false,
-      message: 'Property id is required.'
+      message: error
     })
-
-    return
   }
-
-  await schedule_instance.deleteLecture(id)
-  res.json({ success: true })
 })
 
 export default router

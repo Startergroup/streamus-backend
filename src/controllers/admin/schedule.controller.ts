@@ -3,9 +3,13 @@ import LectureModel from '../../models/admin/lecture.model'
 import type { schedule, lecture } from './types'
 
 class ScheduleController {
-  async createSchedule (date: schedule) {
+  async createSchedule ({ date, section_name, section_id }: schedule) {
     try {
-      return await ScheduleModel.create({ date: date })
+      return await ScheduleModel.create({
+        date,
+        section_id,
+        section_name
+      })
     } catch (error) {
       throw error
     }
@@ -62,6 +66,21 @@ class ScheduleController {
     }
   }
 
+  async getScheduleBySectionId (id: number) {
+    try {
+      return await ScheduleModel.findOne({
+        where: {
+          section_id: id
+        },
+        include: [
+          { model: LectureModel }
+        ]
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
   async getSchedules () {
     return await ScheduleModel.findAll({
       include: [
@@ -70,14 +89,16 @@ class ScheduleController {
     })
   }
 
-  async updateSchedule (id: number, date: schedule, lectures: lecture[]) {
+  async updateSchedule ({ schedule_id, date, section_name, section_id }: schedule, lectures: lecture[]) {
     try {
       await ScheduleModel.update({
-        date
+        date,
+        section_name,
+        section_id
       }, {
         returning: true,
         where: {
-          schedule_id: id
+          schedule_id
         }
       })
 
@@ -90,8 +111,6 @@ class ScheduleController {
             start: lecture.start,
             end: lecture.end,
             fio: lecture.fio,
-            section_name: lecture.section_name,
-            section_id: lecture.section_id
           }, {
             returning: true,
             where: {
@@ -101,7 +120,7 @@ class ScheduleController {
         } else {
           LectureModel.create({
             ...lecture,
-            schedule_id: id
+            schedule_id
           })
         }
       }))
