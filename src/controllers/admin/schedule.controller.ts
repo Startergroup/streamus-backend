@@ -68,7 +68,7 @@ class ScheduleController {
 
   async getScheduleBySectionId (id: number) {
     try {
-      return await ScheduleModel.findOne({
+      return await ScheduleModel.findAll({
         where: {
           section_id: id
         },
