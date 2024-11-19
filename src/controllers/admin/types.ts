@@ -84,7 +84,8 @@ type lecture = {
   end: any,
   fio?: string,
   name: string,
-  lecture_id?: number
+  lecture_id?: number,
+  is_votable: boolean
 }
 
 export {

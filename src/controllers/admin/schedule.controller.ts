@@ -72,9 +72,7 @@ class ScheduleController {
         where: {
           section_id: id
         },
-        include: [
-          { model: LectureModel }
-        ]
+        include: [{ model: LectureModel }]
       })
     } catch (error) {
       throw error
@@ -111,6 +109,7 @@ class ScheduleController {
             start: lecture.start,
             end: lecture.end,
             fio: lecture.fio,
+            is_votable: lecture.is_votable
           }, {
             returning: true,
             where: {

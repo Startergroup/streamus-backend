@@ -7,8 +7,8 @@ import {
   ForeignKey
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
 import ScheduleModel from './schedule.model'
+
 
 @Table({
   tableName: 'lectures',
@@ -42,6 +42,9 @@ class LectureModel extends Model {
 
   @Column(DataTypes.STRING)
   fio: string
+
+  @Column(DataTypes.BOOLEAN)
+  is_votable: boolean
 }
 
 export default LectureModel

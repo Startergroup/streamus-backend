@@ -8,12 +8,12 @@ const vote_instance = new VoteController()
 
 router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { user_id, tab_id } = req.query
-    const response = await vote_instance.getUserVotes({ user_id, tab_id })
+    const { user_id } = req.query
+    const votes = await vote_instance.getUserVotes(user_id)
 
     res.json({
       success: true,
-      data: response
+      votes
     })
   } catch (error) {
     return res.status(400).send({
@@ -25,8 +25,8 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { user_id, presentation_id, like } = req.body
-    const response = await vote_instance.createVote({ user_id, presentation_id, like })
+    const { user_id, lecture_id, schedule_id } = req.body
+    const response = await vote_instance.createVote({ user_id, lecture_id, schedule_id })
 
     res.json(response)
   } catch (error) {

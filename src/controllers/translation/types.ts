@@ -16,10 +16,10 @@ type quiz = {
 }
 
 type vote = {
-  id?: number,
+  vote_id?: number,
   user_id: number,
-  presentation_id: number,
-  like?: boolean | null
+  lecture_id: number,
+  schedule_id: number
 }
 
 export {

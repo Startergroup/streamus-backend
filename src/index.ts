@@ -16,13 +16,11 @@ import admin_code_route from './routes/v1/translation/user'
 import admin_file_route from './routes/v1/admin/file'
 import admin_quiz_route from './routes/v1/admin/quiz'
 import admin_question_route from './routes/v1/admin/question'
-import admin_presentation_route from './routes/v1/admin/presentation'
+import admin_schedule_route from './routes/v1/admin/schedule'
 import admin_settings_route from './routes/v1/translation/settings'
 import admin_tab_route from './routes/v1/translation/tab'
 import admin_user_auth_route from './routes/v1/translation/auth'
-import admin_vote_route from './routes/v1/admin/vote'
-
-import admin_schedule_route from './routes/v1/admin/schedule'
+import admin_vote from './routes/v1/admin/vote'
 
 import user_quiz_route from './routes/v1/translation/quiz'
 import user_vote_route from './routes/v1/translation/vote'
@@ -62,12 +60,11 @@ app.use(admin_code_route)
 app.use(admin_file_route)
 app.use(admin_quiz_route)
 app.use(admin_question_route)
-app.use(admin_presentation_route)
 app.use(admin_settings_route)
 app.use(admin_tab_route)
 app.use(admin_user_auth_route)
-app.use(admin_vote_route)
 app.use(admin_schedule_route)
+app.use(admin_vote)
 
 app.use(user_quiz_route)
 app.use(user_vote_route)

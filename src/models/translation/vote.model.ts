@@ -1,5 +1,12 @@
-import {AutoIncrement, Column, Model, PrimaryKey, Table} from 'sequelize-typescript'
-import {DataTypes} from "sequelize";
+import {
+  AutoIncrement,
+  Column,
+  Model,
+  PrimaryKey,
+  Table
+} from 'sequelize-typescript'
+import { DataTypes } from 'sequelize'
+
 
 @Table({
   tableName: 'votes',
@@ -10,16 +17,16 @@ class VoteModel extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
-  override id: number
+  vote_id: number
 
   @Column(DataTypes.INTEGER)
-  presentation_id: number
+  lecture_id: number
 
   @Column(DataTypes.INTEGER)
   user_id: number
 
-  @Column(DataTypes.BOOLEAN)
-  like: boolean
+  @Column(DataTypes.INTEGER)
+  schedule_id: number
 }
 
 export default VoteModel
