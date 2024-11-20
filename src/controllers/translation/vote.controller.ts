@@ -1,4 +1,6 @@
 import type { vote } from './types'
+import { Op } from 'sequelize'
+import LectureModel from '../../models/admin/lecture.model'
 import VoteModel from '../../models/translation/vote.model'
 
 class VoteController {
@@ -46,13 +48,27 @@ class VoteController {
     }
   }
 
-  public async getVoteReport (schedule_id: number) {
+  public async getReportVote ({ start, end }: { start: Date, end: Date }) {
     try {
-      return await VoteModel.findAll({
+      const lectures = await LectureModel.findAll({
         where: {
-          schedule_id
+          start: {
+            [Op.between]: [start, end]
+          },
+          is_votable: true
         }
       })
+
+      return await Promise.all(lectures.map(async lecture => {
+        return {
+          ...lecture.toJSON(),
+          votes: await VoteModel.count({
+            where: {
+              lecture_id: lecture.lecture_id
+            }
+          })
+        }
+      }))
     } catch (error) {
       throw error
     }

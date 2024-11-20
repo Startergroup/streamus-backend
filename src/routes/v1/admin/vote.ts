@@ -7,16 +7,16 @@ const vote_instance = new VoteController()
 
 router.get(`/api/${ROUTES_VERSION}/vote/report`, async (req: any, res: any) => {
   try {
-    const { schedule_id } = req.query
+    const { start, end } = req.query
 
-    if (!schedule_id) {
+    if (!(start && end)) {
       return res.json({
         success: false,
         message: 'Schedule id is required.'
       })
     }
 
-    const votes = await vote_instance.getVoteReport(schedule_id)
+    const votes = await vote_instance.getReportVote({ start, end })
 
     res.json({
       success: true,
