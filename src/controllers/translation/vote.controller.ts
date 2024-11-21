@@ -1,5 +1,6 @@
 import type { vote } from './types'
 import { Op } from 'sequelize'
+import dayjs from 'dayjs'
 import LectureModel from '../../models/admin/lecture.model'
 import VoteModel from '../../models/translation/vote.model'
 
@@ -58,8 +59,9 @@ class VoteController {
           is_votable: true
         }
       })
+      const sortedLectures = lectures.sort((a:LectureModel, b:LectureModel) => dayjs(a.start).unix() - dayjs(b.start).unix())
 
-      return await Promise.all(lectures.map(async lecture => {
+      return await Promise.all(sortedLectures.map(async lecture => {
         return {
           ...lecture.toJSON(),
           votes: await VoteModel.count({
