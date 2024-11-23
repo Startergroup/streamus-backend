@@ -73,6 +73,30 @@ class VoteController {
       throw error
     }
   }
+
+  public async getReportBySection (id: number) {
+    try {
+      const lectures = await LectureModel.findAll({
+        where: {
+          schedule_id: id,
+          is_votable: true
+        }
+      })
+
+      return await Promise.all(lectures.map(async lecture => {
+        return {
+          ...lecture.toJSON(),
+          votes: await VoteModel.count({
+            where: {
+              lecture_id: lecture.lecture_id
+            }
+          })
+        }
+      }))
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default VoteController
