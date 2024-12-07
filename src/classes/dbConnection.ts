@@ -32,12 +32,12 @@ class DBConnection {
     }
   }
 
-  public async initDbConnection () {
+  public async initDbConnection (db_name: string) {
     try {
       this.appendModels()
       await this.connect()
 
-      console.debug('Database initialized')
+      console.debug(`Database ${db_name} initialized`)
     } catch (error) {
       console.error(error)
     }
