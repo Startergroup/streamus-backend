@@ -13,7 +13,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.HOST_DEV }} > ~/.ssh/known_hosts
 
       - name: connect and pull
-        run: ssh ${{ secrets.USER_DEV }}@${{ secrets.HOST_DEV }} "cd ${{ secrets.WORKDIR_DEV }} && git checkout master && git pull && pm2 restart ts-node && exit"
+        run: ssh ${{ secrets.USER_DEV }}@${{ secrets.HOST_DEV }} "cd ${{ secrets.WORKDIR_DEV }} && git checkout dev && git pull && pm2 restart ts-node && exit"
 
       - name: cleanup
         run: rm -rf ~/.ssh
