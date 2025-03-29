@@ -102,9 +102,10 @@ class QuizController {
     }
   }
 
-  async updateQuiz ({ quiz_id, introduction_text, duration, logo, background }: quiz) {
+  async updateQuiz ({ quiz_id, name, introduction_text, duration, logo, background }: quiz) {
     try {
       await QuizModel.update({
+        name,
         introduction_text,
         duration,
         logo,
