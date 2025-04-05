@@ -113,12 +113,12 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 })
 
-router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (_req: any, res: any) => {
+router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (req: any, res: any) => {
   try {
-    // const { path } = req.body
+    const { path } = req.body
     const workbook = new Excel.Workbook()
 
-    await workbook.xlsx.readFile('C:\\Users\\MrTad\\Desktop\\Startergroup\\Streamus apps\\backend\\public\\Шаблон_расписания.xlsx')
+    await workbook.xlsx.readFile(path)
 
     const worksheet = workbook.worksheets[0]
     const schedules: any[] = []
