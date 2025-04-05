@@ -1,7 +1,9 @@
+import dayjs from 'dayjs'
+import Excel from 'exceljs'
+import ScheduleController from '../../../controllers/admin/schedule.controller'
+import type { lecture } from '../../../controllers/admin/types'
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import type { lecture } from '../../../controllers/admin/types'
-import ScheduleController from '../../../controllers/admin/schedule.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/schedule`
@@ -98,6 +100,58 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     res.json({
       success: true
     })
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error
+    })
+  }
+})
+
+router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (_req: any, res: any) => {
+  try {
+    // const { path } = req.body
+    const workbook = new Excel.Workbook()
+
+    await workbook.xlsx.readFile('C:\\Users\\MrTad\\Desktop\\Startergroup\\Streamus apps\\backend\\public\\Шаблон_расписания.xlsx')
+
+    const worksheet = workbook.worksheets[0]
+    const schedules: any[] = []
+
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber <= 1) return
+
+      // @ts-ignore
+      schedules.push(row.values.slice(1))
+    })
+
+    const mapped_lectures = schedules.map(schedule => {
+      const schedule_date = dayjs(schedule[0])
+      const schedule_date_year = schedule_date.get('year')
+      const schedule_date_month = schedule_date.get('month')
+      const schedule_date_date = schedule_date.get('date')
+
+      const start_date = dayjs(schedule[5])
+        .set('year', schedule_date_year)
+        .set('month', schedule_date_month)
+        .set('date', schedule_date_date)
+      const end_date = dayjs(schedule[6])
+        .set('year', schedule_date_year)
+        .set('month', schedule_date_month)
+        .set('date', schedule_date_date)
+
+      return {
+        city: schedule[3],
+        company: schedule[4],
+        end: end_date,
+        fio: schedule[7],
+        is_votable: schedule[9],
+        name: schedule[8],
+        start: start_date
+      }
+    })
+
+    console.debug(mapped_lectures)
   } catch (error) {
     res.json({
       success: false,
