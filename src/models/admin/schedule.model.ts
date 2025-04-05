@@ -21,7 +21,7 @@ class ScheduleModel extends Model {
   @Column(DataTypes.INTEGER)
   schedule_id: number
 
-  @Column(DataTypes.DATEONLY)
+  @Column(DataTypes.DATE)
   date: string
 
   @Column(DataTypes.INTEGER)

@@ -71,7 +71,7 @@ type presentation = {
 }
 
 type schedule = {
-  date: Date,
+  date: Date | Number,
   section_name: string,
   section_id: number
   schedule_id?: number

@@ -1,9 +1,14 @@
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 import Excel from 'exceljs'
 import ScheduleController from '../../../controllers/admin/schedule.controller'
 import type { lecture } from '../../../controllers/admin/types'
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/schedule`
@@ -125,6 +130,11 @@ router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (_req: any, res: any
       schedules.push(row.values.slice(1))
     })
 
+    const { schedule_id = 0 } = (await schedule_instance.createSchedule({
+      date: dayjs(schedules[0][0]).tz('Europe/Moscow').valueOf(),
+      section_id: schedules[0][1],
+      section_name: schedules[0][2]
+    }))?.dataValues || {}
     const mapped_lectures = schedules.map(schedule => {
       const schedule_date = dayjs(schedule[0])
       const schedule_date_year = schedule_date.get('year')
@@ -143,15 +153,20 @@ router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (_req: any, res: any
       return {
         city: schedule[3],
         company: schedule[4],
-        end: end_date,
+        end: dayjs(end_date).tz('Europe/Moscow').valueOf(),
         fio: schedule[7],
-        is_votable: schedule[9],
+        is_votable: schedule[9].toLowerCase() === 'да',
         name: schedule[8],
-        start: start_date
+        start: dayjs(start_date).tz('Europe/Moscow').valueOf(),
+        schedule_id
       }
     })
 
-    console.debug(mapped_lectures)
+    await schedule_instance.createLectures(mapped_lectures)
+
+    res.json({
+      success: true
+    })
   } catch (error) {
     res.json({
       success: false,
