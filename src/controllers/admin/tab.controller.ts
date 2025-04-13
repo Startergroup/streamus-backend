@@ -19,6 +19,18 @@ class TabController {
     }
   }
 
+  public async getTabByName (name: string) {
+    try {
+      return await tab_model.findOne({
+        where: {
+          name
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async getTab (tab_id: number) {
     try {
       return await tab_model.findOne({

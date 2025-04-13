@@ -9,6 +9,7 @@ import { ROUTES_VERSION } from '../../../constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
+dayjs.tz.setDefault('Europe/Moscow')
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/schedule`
@@ -116,58 +117,95 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
 router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (req: any, res: any) => {
   try {
     const { path } = req.body
+    const targetPath = process.env.NODE_ENV === 'production' ? path : 'C:\\Users\\MrTad\\Desktop\\backend\\public\\Шаблон_расписания.xlsx'
     const workbook = new Excel.Workbook()
 
-    await workbook.xlsx.readFile(path)
+    await workbook.xlsx.readFile(targetPath)
 
     const worksheet = workbook.worksheets[0]
-    const schedules: any[] = []
+    const grouped_data:{ [key:string]: unknown } = {}
+    const result = []
 
-    worksheet.eachRow((row, rowNumber) => {
-      if (rowNumber <= 1) return
+    worksheet.eachRow(async (row, index) => {
+      if (index <= 1) return
 
-      // @ts-ignore
-      schedules.push(row.values.slice(1))
-    })
+      const [
+        date,
+        section_id,
+        section_name,
+        city,
+        company,
+        start_time,
+        end_time,
+        fio,
+        lecture_name,
+        is_votable
+      ] = (row.values as []).slice(1)
+      const schedule_date = dayjs.tz(date, 'YYYY-MM-DD HH:mm:ss', 'Europe/Moscow')
+      const group_key = `${schedule_date}_${section_id}`
 
-    const { schedule_id = 0 } = (await schedule_instance.createSchedule({
-      date: dayjs(schedules[0][0]).tz('Europe/Moscow').valueOf(),
-      section_id: schedules[0][1],
-      section_name: schedules[0][2]
-    }))?.dataValues || {}
-    const mapped_lectures = schedules.map(schedule => {
-      const schedule_date = dayjs(schedule[0])
-      const schedule_date_year = schedule_date.get('year')
-      const schedule_date_month = schedule_date.get('month')
-      const schedule_date_date = schedule_date.get('date')
-
-      const start_date = dayjs(schedule[5])
-        .set('year', schedule_date_year)
-        .set('month', schedule_date_month)
-        .set('date', schedule_date_date)
-      const end_date = dayjs(schedule[6])
-        .set('year', schedule_date_year)
-        .set('month', schedule_date_month)
-        .set('date', schedule_date_date)
-
-      return {
-        city: schedule[3],
-        company: schedule[4],
-        end: dayjs(end_date).tz('Europe/Moscow').valueOf(),
-        fio: schedule[7],
-        is_votable: schedule[9].toLowerCase() === 'да',
-        name: schedule[8],
-        start: dayjs(start_date).tz('Europe/Moscow').valueOf(),
-        schedule_id
+      if (!grouped_data[group_key]) {
+        grouped_data[group_key] = {
+          date: schedule_date.valueOf(),
+          section_id: Number(section_id),
+          section_name,
+          lectures: []
+        }
       }
+
+      // Создаем полные даты для начала и окончания события
+      const start_date_time = schedule_date
+        // @ts-ignore
+        .hour(start_time.split(':')[0])
+        // @ts-ignore
+        .minute(start_time.split(':')[1])
+        .second(0);
+
+      const end_date_time = schedule_date
+        // @ts-ignore
+        .hour(end_time.split(':')[0])
+        // @ts-ignore
+        .minute(end_time.split(':')[1])
+        .second(0);
+
+      // Добавляем ВСЕ события, включая перерывы и регистрацию
+      // @ts-ignore
+      grouped_data[group_key].lectures.push({
+        city: city || '',
+        company: company || '',
+        end: end_date_time.valueOf(),
+        start: start_date_time.valueOf(),
+        fio: fio || '',
+        is_votable: (is_votable as string).toLowerCase() === 'да',
+        name: lecture_name || ''
+      })
     })
 
-    await schedule_instance.createLectures(mapped_lectures)
+    for (const key in grouped_data) {
+      // @ts-ignore
+      grouped_data[key].lectures.sort((a: any, b: any) => a.start - b.start)
+      result.push(grouped_data[key])
+    }
+
+    for (let i = 0; i < result.length; i++) {
+      // @ts-ignore
+      const { date, section_id, section_name, lectures } = result[i]
+      const { schedule_id } = await schedule_instance.createSchedule({
+        date,
+        section_id,
+        section_name
+      })
+      const mapped_lectures = lectures.map((item: any) => ({ ...item, schedule_id }))
+
+      await schedule_instance.createLectures(mapped_lectures)
+    }
 
     res.json({
       success: true
     })
   } catch (error) {
+    console.debug('Error:', error)
+
     res.json({
       success: false,
       message: error
