@@ -1,4 +1,5 @@
 import AdminModel from './admin.model'
+import Analytics from './analytics.model'
 import AnswersModel from './answers.model'
 import QuestionsModel from './question.model'
 import LectureModel from './lecture.model'
@@ -10,6 +11,7 @@ import UserModel from './user.model'
 
 export default [
   AdminModel,
+  Analytics,
   AnswersModel,
   QuestionsModel,
   LectureModel,

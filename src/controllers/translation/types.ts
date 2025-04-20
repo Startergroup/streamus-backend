@@ -22,16 +22,7 @@ type vote = {
   schedule_id: number
 }
 
-type analytics = {
-  tab_id: number,
-  user_id: number,
-  start_time: number,
-  end_time?: number,
-  duration?: number
-}
-
 export {
-  analytics,
   answer,
   quiz,
   vote

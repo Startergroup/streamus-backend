@@ -3,9 +3,12 @@ import {
   Column,
   Model,
   PrimaryKey,
-  Table
+  Table,
+  ForeignKey,
+  BelongsTo
 } from 'sequelize-typescript'
-import {DataTypes} from "sequelize";
+import { DataTypes } from 'sequelize'
+import TabModel from './tab.model'
 
 @Table({
   tableName: 'analytics',
@@ -18,17 +21,21 @@ class Analytics extends Model {
   @Column(DataTypes.INTEGER)
   override id: number
 
+  @ForeignKey(() => TabModel)
   @Column(DataTypes.INTEGER)
   tab_id: number
+
+  @BelongsTo(() => TabModel) // Простая ассоциация
+  tab: TabModel // Это будет экземпляр TabModel
 
   @Column(DataTypes.INTEGER)
   user_id: number
 
   @Column(DataTypes.DATE)
-  start_time: number
+  start_time: Date
 
   @Column(DataTypes.DATE)
-  end_time: number
+  end_time: Date
 }
 
 export default Analytics

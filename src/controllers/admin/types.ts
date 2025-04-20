@@ -88,7 +88,16 @@ type lecture = {
   is_votable: boolean
 }
 
+type analytics = {
+  tab_id: number,
+  user_id: number,
+  start_time: number,
+  end_time?: number,
+  duration?: number
+}
+
 export {
+  analytics,
   admin,
   answer,
   code,

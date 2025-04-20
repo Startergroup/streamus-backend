@@ -1,23 +1,14 @@
 import {type Response, Router} from 'express'
 import type { Request } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import AnalyticsController from '../../../controllers/translation/analytics.controller'
+import AnalyticsController from '../../../controllers/admin/analytics.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/analytics/section-views`
 
-router.get(CURRENT_ROUTE, async (req: Request, res: Response):Promise<any> => {
+router.get(CURRENT_ROUTE, async (_req: Request, res: Response):Promise<any> => {
   try {
-    const { tab_id } = req.query
-
-    if (!tab_id) {
-      return res.json({
-        success: false,
-        message: 'ID is required'
-      })
-    }
-
-    const response = await AnalyticsController.getAnalyticsByTabId(tab_id as string)
+    const response = await AnalyticsController.getSectionsAnalytics()
 
     res.json(response)
   } catch (error) {

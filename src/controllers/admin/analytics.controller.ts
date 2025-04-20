@@ -1,7 +1,8 @@
-import AnalyticsModel from '../../models/translation/analytics.model'
+import AnalyticsModel from '../../models/admin/analytics.model'
+import TabModel from '../../models/admin/tab.model'
 import { Op } from 'sequelize'
-import type { analytics } from './types'
 import { Sequelize } from 'sequelize-typescript'
+import type { analytics } from './types'
 
 class AnalyticsController {
   public async onUpdateSectionAnalytics ({ tab_id, user_id, start_time }: analytics): Promise<{ success: boolean } | null> {
@@ -41,21 +42,31 @@ class AnalyticsController {
     }
   }
 
-  public async getAnalyticsByTabId (tab_id: number | string): Promise<{ success: boolean, views: analytics[] } | null> {
+  public async getSectionsAnalytics (): Promise<{ success: boolean, views: analytics[] } | null> {
     try {
-      if (!tab_id) return null
-
-      const views: analytics[] = await AnalyticsModel.findAll({
+      const views: any[] = await AnalyticsModel.findAll({
+        attributes: [
+          'tab_id',
+          [Sequelize.fn('COUNT', Sequelize.col('id')), 'views'],
+          [Sequelize.col('tab.name'), 'tab_name']
+        ],
+        include: [{
+          model: TabModel,
+          as: 'tab',
+          attributes: [],
+          required: true
+        }],
         where: {
           [Op.and]: [
             Sequelize.where(
               Sequelize.fn('EXTRACT', Sequelize.literal("EPOCH FROM (end_time - start_time)")),
               '>',
-              120
-            ),
-            { tab_id }
+              300 // 5 минут
+            )
           ]
-        }
+        },
+        group: ['Analytics.tab_id', 'tab.name'],
+        raw: true
       })
 
       return {

@@ -3,8 +3,10 @@ import {
   Column,
   Model,
   PrimaryKey,
-  Table
+  Table,
+  HasMany
 } from 'sequelize-typescript'
+import Analytics from './analytics.model'
 import { DataTypes } from 'sequelize'
 
 @Table({
@@ -26,6 +28,9 @@ class TabModel extends Model {
 
   @Column(DataTypes.INTEGER)
   order: number
+
+  @HasMany(() => Analytics) // Обратная ассоциация
+  analytics: Analytics[]
 }
 
 export default TabModel
