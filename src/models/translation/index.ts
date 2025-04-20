@@ -1,7 +1,9 @@
-import QuizModel from './quiz.model'
-import VoteModel from './vote.model'
+import Analytics from './analytics.model'
+import Quiz from './quiz.model'
+import Vote from './vote.model'
 
 export default [
-  QuizModel,
-  VoteModel
+  Analytics,
+  Quiz,
+  Vote
 ]
