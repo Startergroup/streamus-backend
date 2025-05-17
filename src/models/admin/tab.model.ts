@@ -4,9 +4,7 @@ import {
   Model,
   PrimaryKey,
   Table,
-  HasMany
 } from 'sequelize-typescript'
-import Analytics from './analytics.model'
 import { DataTypes } from 'sequelize'
 
 @Table({
@@ -14,7 +12,7 @@ import { DataTypes } from 'sequelize'
   paranoid: false,
   timestamps: false
 })
-class TabModel extends Model {
+class Tab extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
@@ -28,9 +26,6 @@ class TabModel extends Model {
 
   @Column(DataTypes.INTEGER)
   order: number
-
-  @HasMany(() => Analytics) // Обратная ассоциация
-  analytics: Analytics[]
 }
 
-export default TabModel
+export default Tab

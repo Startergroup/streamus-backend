@@ -8,14 +8,14 @@ import {
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
 
-import LectureModel from './lecture.model'
+import Lecture from './lecture.model'
 
 @Table({
   tableName: 'schedules',
   paranoid: false,
   timestamps: false
 })
-class ScheduleModel extends Model {
+class Schedule extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataTypes.INTEGER)
@@ -30,12 +30,12 @@ class ScheduleModel extends Model {
   @Column(DataTypes.STRING)
   section_name: string
 
-  @HasMany(() => LectureModel, {
+  @HasMany(() => Lecture, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true
   })
-  lectures: LectureModel[]
+  lectures: Lecture[]
 }
 
-export default ScheduleModel
+export default Schedule

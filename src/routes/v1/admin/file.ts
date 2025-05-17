@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
 import { UPLOAD_PATH } from '../../../constants'
-import { upload } from '../../../utils/upload_file'
+import { upload } from '../../../utils/upload-file'
 
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/file`
 const router = Router()

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { ROUTES_VERSION, UPLOAD_PATH } from '../../../constants'
 import UserController from '../../../controllers/admin/user.controller'
-import { upload } from '../../../utils/upload_file'
+import { upload } from '../../../utils/upload-file'
 import fs from "fs";
 
 const router = Router()

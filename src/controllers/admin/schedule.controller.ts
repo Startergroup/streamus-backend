@@ -1,5 +1,7 @@
 import ScheduleModel from '../../models/admin/schedule.model'
 import LectureModel from '../../models/admin/lecture.model'
+
+import dayjs from 'dayjs'
 import type { schedule, lecture } from './types'
 
 class ScheduleController {
@@ -89,6 +91,8 @@ class ScheduleController {
 
   async updateSchedule ({ schedule_id, date, section_name, section_id }: schedule, lectures: lecture[]) {
     try {
+      const schedule_date = dayjs.tz(date as Date, 'YYYY-MM-DD HH:mm:ss', 'Europe/Moscow')
+
       await ScheduleModel.update({
         date,
         section_name,
@@ -106,8 +110,16 @@ class ScheduleController {
             name: lecture.name,
             city: lecture.city,
             company: lecture.company,
-            start: lecture.start,
-            end: lecture.end,
+            start: dayjs(lecture.start)
+              .set('year', schedule_date.year())
+              .set('month', schedule_date.month())
+              .set('date', schedule_date.date())
+              .valueOf(),
+            end: dayjs(lecture.end)
+              .set('year', schedule_date.year())
+              .set('month', schedule_date.month())
+              .set('date', schedule_date.date())
+              .valueOf(),
             fio: lecture.fio,
             is_votable: lecture.is_votable
           }, {

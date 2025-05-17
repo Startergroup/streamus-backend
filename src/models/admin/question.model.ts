@@ -10,15 +10,15 @@ import {
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
 
-import QuizModel from './quiz.model'
-import AnswersModel from './answers.model'
+import Quiz from './quiz.model'
+import Answers from './answers.model'
 
 @Table({
   tableName: 'questions',
   paranoid: false,
   timestamps: false
 })
-class QuestionModel extends Model {
+class Question extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataTypes.INTEGER)
@@ -30,22 +30,22 @@ class QuestionModel extends Model {
   @Column(DataTypes.STRING)
   img: string
 
-  @ForeignKey(() => QuizModel)
+  @ForeignKey(() => Quiz)
   @Column(DataTypes.INTEGER)
   quiz_id: number
 
-  @BelongsTo(() => QuizModel)
-  quiz: QuizModel
+  @BelongsTo(() => Quiz)
+  quiz: Quiz
 
   @Column(DataTypes.BOOLEAN)
   free_answer: boolean
 
-  @HasMany(() => AnswersModel, {
+  @HasMany(() => Answers, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true,
   })
-  answers: AnswersModel[]
+  answers: Answers[]
 }
 
-export default QuestionModel
+export default Question

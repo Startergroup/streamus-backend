@@ -12,7 +12,7 @@ import { DataTypes } from 'sequelize'
   paranoid: false,
   timestamps: false
 })
-class AdminModel extends Model {
+class Admin extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
@@ -28,4 +28,4 @@ class AdminModel extends Model {
   salt: string
 }
 
-export default AdminModel
+export default Admin

@@ -6,7 +6,7 @@ import {DataTypes} from "sequelize";
   paranoid: false,
   timestamps: false
 })
-class SettingsModel extends Model {
+class Settings extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
@@ -28,4 +28,4 @@ class SettingsModel extends Model {
   favicon: string
 }
 
-export default SettingsModel
+export default Settings

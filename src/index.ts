@@ -6,7 +6,7 @@ import file_upload from 'express-fileupload'
 import dotenv from 'dotenv'
 
 import type { SequelizeOptions } from 'sequelize-typescript'
-import DBConnection from './classes/dbConnection'
+import DBConnection from './classes/db-connection'
 import AdminModels from './models/admin/index'
 import TranslationModels from './models/translation/index'
 

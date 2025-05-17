@@ -9,14 +9,14 @@ import {
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
 
-import QuestionModel from './question.model'
+import Question from './question.model'
 
 @Table({
   tableName: 'answers',
   paranoid: false,
   timestamps: false
 })
-class AnswersModel extends Model {
+class Answers extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
@@ -34,12 +34,12 @@ class AnswersModel extends Model {
   @Column(DataTypes.BOOLEAN)
   is_free_answer: boolean
 
-  @ForeignKey(() => QuestionModel)
+  @ForeignKey(() => Question)
   @Column(DataTypes.INTEGER)
   question_id: number
 
-  @BelongsTo(() => QuestionModel)
-  question: QuestionModel
+  @BelongsTo(() => Question)
+  question: Question
 }
 
-export default AnswersModel
+export default Answers

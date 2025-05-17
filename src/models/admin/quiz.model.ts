@@ -7,14 +7,15 @@ import {
   HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import QuestionModel from './question.model'
+
+import Question from './question.model'
 
 @Table({
   tableName: 'quizzes',
   paranoid: false,
   timestamps: false
 })
-class QuizModel extends Model {
+class Quiz extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataTypes.INTEGER)
@@ -38,12 +39,12 @@ class QuizModel extends Model {
   @Column(DataTypes.STRING)
   background: string
 
-  @HasMany(() => QuestionModel, {
+  @HasMany(() => Question, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true
   })
-  questions: QuestionModel[]
+  questions: Question[]
 }
 
-export default QuizModel
+export default Quiz

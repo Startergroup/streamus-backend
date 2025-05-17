@@ -12,7 +12,7 @@ import { DataTypes } from 'sequelize'
   paranoid: false,
   timestamps: false
 })
-class UserModel extends Model {
+class User extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
@@ -34,4 +34,4 @@ class UserModel extends Model {
   last_activity: Date
 }
 
-export default UserModel
+export default User

@@ -3,30 +3,23 @@ import {
   Column,
   Model,
   PrimaryKey,
-  Table,
-  ForeignKey,
-  BelongsTo
+  Table
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import TabModel from './tab.model'
 
 @Table({
-  tableName: 'analytics',
+  tableName: 'lecture-report',
   paranoid: false,
   timestamps: false
 })
-class Analytics extends Model {
-  @PrimaryKey
+class LectureReportModel extends Model {
   @AutoIncrement
+  @PrimaryKey
   @Column(DataTypes.INTEGER)
   override id: number
 
-  @ForeignKey(() => TabModel)
   @Column(DataTypes.INTEGER)
-  tab_id: number
-
-  @BelongsTo(() => TabModel) // Простая ассоциация
-  tab: TabModel // Это будет экземпляр TabModel
+  lecture_id: number
 
   @Column(DataTypes.INTEGER)
   user_id: number
@@ -38,4 +31,4 @@ class Analytics extends Model {
   end_time: Date
 }
 
-export default Analytics
+export default LectureReportModel

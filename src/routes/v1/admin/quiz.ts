@@ -8,7 +8,7 @@ import QuestionController from '../../../controllers/admin/question.controller'
 import UserQuizController from '../../../controllers/translation/quiz.controller'
 import UserController from '../../../controllers/admin/user.controller'
 
-import sortByTimeAndPoints from '../../../utils/sortByTimeAndPoints'
+import sortByTimeAndPoints from '../../../utils/sort-by-time-and-points'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/quiz`

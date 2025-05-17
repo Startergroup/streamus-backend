@@ -1,23 +1,23 @@
-import AdminModel from './admin.model'
-import Analytics from './analytics.model'
-import AnswersModel from './answers.model'
-import QuestionsModel from './question.model'
-import LectureModel from './lecture.model'
-import QuizModel from './quiz.model'
-import SettingsModel from './settings'
-import ScheduleModel from './schedule.model'
-import TabModel from './tab.model'
-import UserModel from './user.model'
+import Admin from './admin.model'
+import Answers from './answers.model'
+import Questions from './question.model'
+import Lecture from './lecture.model'
+import LectureViews from './lecture-views.model'
+import Quiz from './quiz.model'
+import Settings from './settings'
+import Schedule from './schedule.model'
+import Tab from './tab.model'
+import User from './user.model'
 
 export default [
-  AdminModel,
-  Analytics,
-  AnswersModel,
-  QuestionsModel,
-  LectureModel,
-  QuizModel,
-  SettingsModel,
-  ScheduleModel,
-  TabModel,
-  UserModel
+  Admin,
+  Answers,
+  Questions,
+  Lecture,
+  LectureViews,
+  Quiz,
+  Settings,
+  Schedule,
+  Tab,
+  User
 ]

@@ -4,10 +4,13 @@ import {
   AutoIncrement,
   PrimaryKey,
   Column,
-  ForeignKey
+  ForeignKey,
+  HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import ScheduleModel from './schedule.model'
+
+import LectureViews from './lecture-views.model'
+import Schedule from './schedule.model'
 
 
 @Table({
@@ -15,13 +18,13 @@ import ScheduleModel from './schedule.model'
   paranoid: false,
   timestamps: false
 })
-class LectureModel extends Model {
+class Lecture extends Model {
   @AutoIncrement
   @PrimaryKey
   @Column(DataTypes.INTEGER)
   lecture_id: number
 
-  @ForeignKey(() => ScheduleModel)
+  @ForeignKey(() => Schedule)
   @Column(DataTypes.INTEGER)
   schedule_id: number
 
@@ -45,6 +48,13 @@ class LectureModel extends Model {
 
   @Column(DataTypes.BOOLEAN)
   is_votable: boolean
+
+  @HasMany(() => LectureViews, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true
+  })
+  views: LectureViews[]
 }
 
-export default LectureModel
+export default Lecture
