@@ -1,33 +1,42 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": true,
-    "target": "es2019",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "removeComments": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitOverride": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "forceConsistentCasingInFileNames": true,
-    "importsNotUsedAsValues": "error",
-    "ignoreDeprecations": "5.0",
-    "lib": ["DOM", "es2019", "esnext.asynciterable"],
-    "types": ["node"],
-    "baseUrl": ".",
-    "paths": {
-      "*": ["types/*"]
-    },
-    "outDir": "dist",
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "5.0",
+    "importsNotUsedAsValues": "error",
+    "lib": [
+      "DOM",
+      "es2019",
+      "esnext.asynciterable"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "paths": {
+      "*": [
+        "types/*"
+      ],
+      "@/*": ["src/*"]
+    },
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "target": "es2019",
+    "types": [
+      "node"
+    ]
   }
 }

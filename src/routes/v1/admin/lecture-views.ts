@@ -1,6 +1,6 @@
+import LectureViewsController from '@/controllers/translation/lecture-views.controller'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-import LectureViewsController from '../../../controllers/translation/lecture-views.controller'
+import { ROUTES_VERSION } from '@/constants'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/lecture/views`

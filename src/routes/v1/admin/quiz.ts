@@ -1,23 +1,15 @@
+import AnswerController from '@/controllers/admin/answer.controller'
+import QuizController from '@/controllers/admin/quiz.controller'
+import QuestionController from '@/controllers/admin/question.controller'
+import UserQuizController from '@/controllers/translation/quiz.controller'
+import UserController from '@/controllers/admin/user.controller'
+import sortByTimeAndPoints from '@/utils/sort-by-time-and-points'
+import type { answer, question } from '@/controllers/admin/types'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-import type { answer, question } from '../../../controllers/admin/types'
-
-import AnswerController from '../../../controllers/admin/answer.controller'
-import QuizController from '../../../controllers/admin/quiz.controller'
-import QuestionController from '../../../controllers/admin/question.controller'
-import UserQuizController from '../../../controllers/translation/quiz.controller'
-import UserController from '../../../controllers/admin/user.controller'
-
-import sortByTimeAndPoints from '../../../utils/sort-by-time-and-points'
+import { ROUTES_VERSION } from '@/constants'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/quiz`
-
-const answer_instance = new AnswerController()
-const quiz_instance = new QuizController()
-const question_instance = new QuestionController()
-const user_quiz_instance = new UserQuizController()
-const user_instance = new UserController()
 
 router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   const { quiz_id = null } = req.query
@@ -30,7 +22,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 
   try {
-    const quiz = await quiz_instance.getQuiz(parseInt(quiz_id))
+    const quiz = await QuizController.getQuiz(parseInt(quiz_id))
 
     return res.json({
       success: true,
@@ -46,7 +38,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.get(`/api/${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
   try {
-    const quizzes = await quiz_instance.getQuizzes()
+    const quizzes = await QuizController.getQuizzes()
 
     res.json({
       success: true,
@@ -71,7 +63,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 
   try {
-    const quiz: any = await quiz_instance.createQuiz({
+    const quiz: any = await QuizController.createQuiz({
       name,
       introduction_text,
       duration,
@@ -84,7 +76,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
         quiz_id: quiz.dataValues.quiz_id
       }
     })
-    const added_questions = await question_instance.createQuestion(mapped_questions)
+    const added_questions = await QuestionController.createQuestion(mapped_questions)
     const answers = questions.map((item: question) => {
       return item.answers
     })
@@ -98,7 +90,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
     })
 
     await Promise.all(mapped_answers.map(async (item: answer[]) => {
-      await answer_instance.createAnswer(item)
+      await AnswerController.createAnswer(item)
     }))
 
     res.json({
@@ -124,7 +116,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 
   try {
-    await quiz_instance.updateQuiz({
+    await QuizController.updateQuiz({
       name,
       quiz_id,
       introduction_text,
@@ -134,11 +126,11 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
     })
 
     await Promise.all(questions.map(async (question: question) => {
-      const updated_question = await question_instance.updateQuestion({ ...question, quiz_id })
+      const updated_question = await QuestionController.updateQuestion({ ...question, quiz_id })
       const { answers } = question
 
       await Promise.all(answers.map(async (answer: answer) => {
-        await answer_instance.updateAnswer({
+        await AnswerController.updateAnswer({
           ...answer,
           // @ts-ignore
           question_id: updated_question[0].dataValues.question_id
@@ -168,7 +160,7 @@ router.put(`${CURRENT_ROUTE}/switch_state`, async (req: any, res: any) => {
     })
   }
 
-  const response = await quiz_instance.switchState({ quiz_id, value })
+  const response = await QuizController.switchState({ quiz_id, value })
 
   if (response.success) {
     return res.json(response)
@@ -186,7 +178,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 
   try {
-    const response = await quiz_instance.deleteQuiz(quiz_id)
+    const response = await QuizController.deleteQuiz(quiz_id)
 
     res.json(response)
   } catch (error) {
@@ -199,7 +191,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.delete(`/api/${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
   try {
-    await quiz_instance.deleteQuizzes()
+    await QuizController.deleteQuizzes()
 
     return res.json({
       success: true,
@@ -216,12 +208,12 @@ router.delete(`/api/${ROUTES_VERSION}/quizzes`, async (_req: any, res: any) => {
 router.get(`${CURRENT_ROUTE}/report`, async (req: any, res: any) => {
   try {
     const { quiz_id } = req.query
-    const quizzes = await user_quiz_instance.getQuizzes(quiz_id)
+    const quizzes = await UserQuizController.getQuizzes(quiz_id)
     const mapped_quizzes = quizzes.map(item => item.dataValues)
 
     for (let i = 0; i < mapped_quizzes.length; i++) {
       const quiz = mapped_quizzes[i]
-      const user = await user_instance.getCodeByID(quiz.user_id);
+      const user = await UserController.getCodeByID(quiz.user_id);
 
       (quiz as any).username = user?.dataValues.name;
       (quiz as any).email = user?.dataValues.email;

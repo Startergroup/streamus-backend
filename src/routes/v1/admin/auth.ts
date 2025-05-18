@@ -1,9 +1,8 @@
-import { Router } from 'express'
-import jwt from 'jsonwebtoken'
+import AdminController from '@/controllers/admin/admin.controller'
 import dotenv from 'dotenv'
-
-import { ROUTES_VERSION } from '../../../constants'
-import AdminController from '../../../controllers/admin/admin.controller'
+import jwt from 'jsonwebtoken'
+import { Router } from 'express'
+import { ROUTES_VERSION } from '@/constants'
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV}`

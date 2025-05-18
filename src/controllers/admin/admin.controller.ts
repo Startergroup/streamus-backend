@@ -1,9 +1,9 @@
-import admin_model from '../../models/admin/admin.model'
+import AdminModel from '@/models/admin/admin.model'
 
 class AdminController {
   private async getUser (login: string) {
     try {
-      const user = await admin_model.findOne({
+      const user = await AdminModel.findOne({
         where: {
           login
         }
@@ -27,7 +27,7 @@ class AdminController {
 
   public async getUserSalt (login: string) {
     try {
-      return await admin_model.findOne({
+      return await AdminModel.findOne({
         where: {
           login
         },
@@ -46,7 +46,7 @@ class AdminController {
         return false
       }
 
-      return pass_hash === (user.data as admin_model).dataValues.pass_hash
+      return pass_hash === (user.data as AdminModel).dataValues.pass_hash
     } catch (error) {
       throw error
     }

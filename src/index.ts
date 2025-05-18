@@ -1,17 +1,20 @@
-import express from 'express'
+import 'tsconfig-paths/register.js'
 
+import express from 'express'
 import body_parser from 'body-parser'
 import cors from 'cors'
 import file_upload from 'express-fileupload'
 import dotenv from 'dotenv'
-
 import type { SequelizeOptions } from 'sequelize-typescript'
-import DBConnection from './classes/db-connection'
-import AdminModels from './models/admin/index'
-import TranslationModels from './models/translation/index'
 
-import admin_routes from './routes/v1/admin'
-import translation_routes from './routes/v1/translation'
+// Classes
+import DBConnection from '@/classes/db-connection'
+// Models
+import AdminModels from '@/models/admin/index'
+import TranslationModels from '@/models/translation/index'
+// Routes
+import AdminRoutes from '@/routes/v1/admin'
+import TranslationRoutes from '@/routes/v1/translation'
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
@@ -28,7 +31,7 @@ app.use(file_upload({}))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 
-const routes = [...admin_routes, ...translation_routes]
+const routes = [...AdminRoutes, ...TranslationRoutes]
 
 routes.forEach(route => {
   app.use(route)

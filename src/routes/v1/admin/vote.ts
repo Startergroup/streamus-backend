@@ -1,9 +1,8 @@
+import VoteController from '@/controllers/translation/vote.controller'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-import VoteController from '../../../controllers/translation/vote.controller'
+import { ROUTES_VERSION } from '@/constants'
 
 const router = Router()
-const vote_instance = new VoteController()
 
 router.get(`/api/${ROUTES_VERSION}/vote/report`, async (req: any, res: any) => {
   try {
@@ -16,7 +15,7 @@ router.get(`/api/${ROUTES_VERSION}/vote/report`, async (req: any, res: any) => {
       })
     }
 
-    const votes = await vote_instance.getReportVote({ start, end })
+    const votes = await VoteController.getReportVote({ start, end })
 
     res.json({
       success: true,
@@ -43,7 +42,7 @@ router.get(`/api/${ROUTES_VERSION}/vote/report-by-section`, async (req: any, res
       })
     }
 
-    const votes = await vote_instance.getReportBySection(id)
+    const votes = await VoteController.getReportBySection(id)
 
     return res.json({
       success: true,

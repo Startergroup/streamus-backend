@@ -1,6 +1,6 @@
-import QuizModel from '../../models/translation/quiz.model'
-import QuestionModel from '../../models/admin/question.model'
-import AnswerModel from '../../models/admin/answers.model'
+import AnswerModel from '@/models/admin/answers.model'
+import QuestionModel from '@/models/admin/question.model'
+import QuizModel from '@/models/translation/quiz.model'
 import type { answer, quiz } from './types'
 
 class QuizController {
@@ -72,4 +72,4 @@ class QuizController {
   }
 }
 
-export default QuizController
+export default new QuizController()

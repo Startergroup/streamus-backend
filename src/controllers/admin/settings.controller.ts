@@ -1,4 +1,4 @@
-import SettingsModel from '../../models/admin/settings'
+import SettingsModel from '@/models/admin/settings'
 import type { settings } from './types'
 
 class SettingsController {
@@ -49,4 +49,4 @@ class SettingsController {
   }
 }
 
-export default SettingsController
+export default new SettingsController()

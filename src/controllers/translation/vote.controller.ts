@@ -1,11 +1,10 @@
+import LectureModel from '@/models/admin/lecture.model'
+import LectureViewsModel from '@/models/admin/lecture-views.model'
+import VoteModel from '@/models/translation/vote.model'
 import dayjs from 'dayjs'
 import sequelize from 'sequelize'
 import type { vote } from './types'
 import { Op } from 'sequelize'
-
-import LectureModel from '../../models/admin/lecture.model'
-import LectureViewsModel from '../../models/admin/lecture-views.model'
-import VoteModel from '../../models/translation/vote.model'
 
 class VoteController {
   public async getUserVotes (code_id: number) {
@@ -124,4 +123,4 @@ class VoteController {
   }
 }
 
-export default VoteController
+export default new VoteController()

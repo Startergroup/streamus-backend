@@ -1,11 +1,11 @@
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
 import Excel from 'exceljs'
-import ScheduleController from '../../../controllers/admin/schedule.controller'
-import type { lecture } from '../../../controllers/admin/types'
+import ScheduleController from '@/controllers/admin/schedule.controller'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import type { lecture } from '@/controllers/admin/types'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
+import { ROUTES_VERSION } from '@/constants'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -13,11 +13,10 @@ dayjs.tz.setDefault('Europe/Moscow')
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/schedule`
-const schedule_instance = new ScheduleController()
 
 router.get(`/api/${ROUTES_VERSION}/schedules`, async (_req: any, res: any) => {
   try {
-    const schedules = await schedule_instance.getSchedules()
+    const schedules = await ScheduleController.getSchedules()
 
     res.json({
       success: true,
@@ -44,7 +43,7 @@ router.get(CURRENT_ROUTE, async (req: any, res: any) => {
       return
     }
 
-    const schedule = await schedule_instance.getScheduleById(id)
+    const schedule = await ScheduleController.getScheduleById(id)
 
     res.json({
       success: true,
@@ -71,7 +70,7 @@ router.get(`/api/${ROUTES_VERSION}/schedule-by-section`, async (req: any, res: a
       return
     }
 
-    const schedule = await schedule_instance.getScheduleBySectionId(id)
+    const schedule = await ScheduleController.getScheduleBySectionId(id)
 
     res.json({
       success: true,
@@ -89,7 +88,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
     const { date, section_name, section_id, lectures } = req.body
 
-    const { schedule_id = 0 } = (await schedule_instance.createSchedule({
+    const { schedule_id = 0 } = (await ScheduleController.createSchedule({
       date,
       section_id,
       section_name
@@ -101,7 +100,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     )
 
-    await schedule_instance.createLectures(mapped_lectures)
+    await ScheduleController.createLectures(mapped_lectures)
 
     res.json({
       success: true
@@ -190,14 +189,14 @@ router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (req: any, res: any)
     for (let i = 0; i < result.length; i++) {
       // @ts-ignore
       const { date, section_id, section_name, lectures } = result[i]
-      const { schedule_id } = await schedule_instance.createSchedule({
+      const { schedule_id } = await ScheduleController.createSchedule({
         date,
         section_id,
         section_name
       })
       const mapped_lectures = lectures.map((item: any) => ({ ...item, schedule_id }))
 
-      await schedule_instance.createLectures(mapped_lectures)
+      await ScheduleController.createLectures(mapped_lectures)
     }
 
     res.json({
@@ -216,7 +215,7 @@ router.post(`/api/${ROUTES_VERSION}/schedule/import`, async (req: any, res: any)
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
     const { schedule_id, date, section_name, section_id, lectures } = req.body
-    await schedule_instance.updateSchedule({ schedule_id, date, section_name, section_id }, lectures)
+    await ScheduleController.updateSchedule({ schedule_id, date, section_name, section_id }, lectures)
 
     res.json({
       success: true
@@ -242,7 +241,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
       return
     }
 
-    await schedule_instance.deleteSchedule(id)
+    await ScheduleController.deleteSchedule(id)
     res.json({ success: true })
   } catch (error) {
     res.json({
@@ -265,7 +264,7 @@ router.delete(`/api/${ROUTES_VERSION}/lecture`, async (req: any, res: any) => {
       return
     }
 
-    await schedule_instance.deleteLecture(id)
+    await ScheduleController.deleteLecture(id)
     res.json({ success: true })
   } catch (error) {
     res.json({

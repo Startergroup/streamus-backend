@@ -1,10 +1,10 @@
-import answers_model from '../../models/admin/answers.model'
+import AnswerModel from '@/models/admin/answers.model'
 import type { answer } from './types'
 
 class AnswerController {
   async createAnswer (answers: answer[]) {
     try {
-      return await answers_model.bulkCreate(answers)
+      return await AnswerModel.bulkCreate(answers)
     } catch (error) {
       throw error
     }
@@ -13,7 +13,7 @@ class AnswerController {
   async updateAnswer ({ content, answer_id = null, is_right, img = null, question_id }: answer) {
     try {
       if (answer_id) {
-        return await answers_model.update({
+        return await AnswerModel.update({
           is_right,
           content,
           img
@@ -40,7 +40,7 @@ class AnswerController {
 
   async deleteAnswer (answer_id: number) {
     try {
-      const answer = await answers_model.findOne({
+      const answer = await AnswerModel.findOne({
         where: {
           answer_id
         }
@@ -54,4 +54,4 @@ class AnswerController {
   }
 }
 
-export default AnswerController
+export default new AnswerController()

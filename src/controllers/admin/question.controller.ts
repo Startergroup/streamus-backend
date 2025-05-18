@@ -1,10 +1,10 @@
-import question_model from '../../models/admin/question.model'
+import QuestionModel from '@/models/admin/question.model'
 import type { question } from './types'
 
 class QuestionController {
   async createQuestion (questions: question[]) {
     try {
-      return await question_model.bulkCreate(questions)
+      return await QuestionModel.bulkCreate(questions)
     } catch (error) {
       throw error
     }
@@ -15,7 +15,7 @@ class QuestionController {
       if (!question_id) {
         return await this.createQuestion([{ quiz_id, free_answer, content, img, answers: [] }])
       } else {
-        const updated_question = await question_model.update({
+        const updated_question = await QuestionModel.update({
           content,
           img,
           free_answer
@@ -36,7 +36,7 @@ class QuestionController {
 
   async deleteQuestion (question_id:number) {
     try {
-      const question = await question_model.findOne({
+      const question = await QuestionModel.findOne({
         where: {
           question_id
         }
@@ -50,4 +50,4 @@ class QuestionController {
   }
 }
 
-export default QuestionController
+export default new QuestionController()

@@ -1,7 +1,7 @@
-import UserModel from '../../models/admin/user.model'
-import type { code } from './types'
-import { UPLOAD_PATH } from '../../constants'
+import UserModel from '@/models/admin/user.model'
 import fs from 'fs'
+import type { code } from './types'
+import { UPLOAD_PATH } from '@/constants'
 
 class UserController {
   public async createCode ({ code }: code) {
@@ -237,4 +237,4 @@ class UserController {
   }
 }
 
-export default UserController
+export default new UserController()

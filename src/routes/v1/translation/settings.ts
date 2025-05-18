@@ -1,14 +1,13 @@
+import SettingsController from '@/controllers/admin/settings.controller'
 import { Router} from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-import SettingsController from '../../../controllers/admin/settings.controller'
+import { ROUTES_VERSION } from '@/constants'
 
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/settings`
 const router = Router()
-const settings_instance = new SettingsController()
 
 router.get(CURRENT_ROUTE, async (_req: any, res: any) => {
   try {
-    const settings = await settings_instance.getSettings()
+    const settings = await SettingsController.getSettings()
 
     res.json({
       success: true,
@@ -30,7 +29,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await settings_instance.updateSettings({
+    const response = await SettingsController.updateSettings({
       settings_id,
       title_ru,
       subtitle_ru,

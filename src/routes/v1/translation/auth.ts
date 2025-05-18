@@ -1,16 +1,15 @@
-import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-import UserController from '../../../controllers/admin/user.controller'
-import jwt from 'jsonwebtoken'
+import UserController from '@/controllers/admin/user.controller'
 import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+import { Router } from 'express'
+import { ROUTES_VERSION } from '@/constants'
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
-const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/user`
 const router = Router()
-const user_instance = new UserController()
+const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/user`
 const { ACCESS_TOKEN_SECRET, USER_REFRESH_TOKEN_SECRET, ADMIN_TOKEN_DURATION } = process.env
 
 router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
@@ -26,7 +25,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
       return
     }
 
-    const user = (await user_instance.getCode(code))?.dataValues
+    const user = (await UserController.getCode(code))?.dataValues
 
     if (!user) {
       res.json({
@@ -47,7 +46,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
       const access_token = jwt.sign({}, ACCESS_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION})
       const refresh_token = jwt.sign({}, USER_REFRESH_TOKEN_SECRET as string, { expiresIn: ADMIN_TOKEN_DURATION })
 
-      await user_instance.updateUserData({
+      await UserController.updateUserData({
         code_id,
         name,
         email,
@@ -55,7 +54,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
         refresh_token
       })
 
-      const updated_user = await user_instance.getCode(code)
+      const updated_user = await UserController.getCode(code)
 
       res.json({
         success: true,
@@ -93,7 +92,7 @@ router.post(`${CURRENT_ROUTE}/update_activity`, async (req: any, res: any) => {
       return
     }
 
-    const response = await user_instance.updateActivity(code)
+    const response = await UserController.updateActivity(code)
 
     if (response.success) {
       return res.json(response)
@@ -121,7 +120,7 @@ router.post(`${CURRENT_ROUTE}/refresh_token`, async (req: any, res: any) => {
       return
     }
 
-    const user = (await user_instance.getCode(code))?.dataValues
+    const user = (await UserController.getCode(code))?.dataValues
     const is_valid_refresh_token = user.refresh_token === refresh_token
 
     if (is_valid_refresh_token) {

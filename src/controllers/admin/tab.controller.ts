@@ -1,10 +1,10 @@
-import tab_model from '../../models/admin/tab.model'
+import TabModel from '@/models/admin/tab.model'
 import type { tab } from './types'
 
 class TabController {
   public async createTab ({ name, url, order }: tab) {
     try {
-      await tab_model.create({
+      await TabModel.create({
         name,
         url,
         order
@@ -21,7 +21,7 @@ class TabController {
 
   public async getTabByName (name: string) {
     try {
-      return await tab_model.findOne({
+      return await TabModel.findOne({
         where: {
           name
         }
@@ -33,7 +33,7 @@ class TabController {
 
   public async getTab (tab_id: number) {
     try {
-      return await tab_model.findOne({
+      return await TabModel.findOne({
         where: {
           tab_id
         }
@@ -45,7 +45,7 @@ class TabController {
 
   public async getTabs () {
     try {
-      return await tab_model.findAll()
+      return await TabModel.findAll()
     } catch(error) {
       throw error
     }
@@ -53,7 +53,7 @@ class TabController {
 
   public async updateTab ({ tab_id, name, url, order }: tab) {
     try {
-      await tab_model.update({
+      await TabModel.update({
         name,
         url,
         order
@@ -97,4 +97,4 @@ class TabController {
   }
 }
 
-export default TabController
+export default new TabController()

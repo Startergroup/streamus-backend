@@ -1,16 +1,15 @@
+import UserController from '@/controllers/admin/user.controller'
+import fs from 'fs'
 import { Router } from 'express'
-import { ROUTES_VERSION, UPLOAD_PATH } from '../../../constants'
-import UserController from '../../../controllers/admin/user.controller'
-import { upload } from '../../../utils/upload-file'
-import fs from "fs";
+import { ROUTES_VERSION, UPLOAD_PATH } from '@/constants'
+import { upload } from '@/utils/upload-file'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/code`
-const code_instance = new UserController()
 
 router.get(`/api/${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
   try {
-    const codes = await code_instance.getCodes()
+    const codes = await UserController.getCodes()
 
     res.json({
       success: true,
@@ -32,7 +31,7 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await code_instance.createCode({ code })
+    const response = await UserController.createCode({ code })
     res.json(response)
   } catch (error) {
     res.status(400).send(error)
@@ -45,7 +44,7 @@ router.post(`/api/${ROUTES_VERSION}/codes`, async (req: any, res: any) => {
   }
 
   try {
-    code_instance.importCodesFromFile(req.files.file)
+    UserController.importCodesFromFile(req.files.file)
 
     res.json({
       success: true,
@@ -67,7 +66,7 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await code_instance.updateCode({ code_id, code })
+    const response = await UserController.updateCode({ code_id, code })
 
     res.json(response)
   } catch (error) {
@@ -87,7 +86,7 @@ router.put(`${CURRENT_ROUTE}/user`, async (req: any, res: any) => {
     }
 
     const last_activity = Date.now()
-    const response = await code_instance.updateUserData({ code_id, name, email, last_activity })
+    const response = await UserController.updateUserData({ code_id, name, email, last_activity })
 
     return res.json(response)
   } catch (error) {
@@ -106,7 +105,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await code_instance.deleteCode(code_id)
+    const response = await UserController.deleteCode(code_id)
 
     res.json(response)
   } catch (error) {
@@ -116,7 +115,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
 
 router.delete(`/api/${ROUTES_VERSION}/codes`, async (_req: any, res: any) => {
   try {
-    const response = await code_instance.deleteCodes()
+    const response = await UserController.deleteCodes()
 
     res.json(response)
   } catch (error) {
@@ -150,7 +149,7 @@ router.post(`/api/${ROUTES_VERSION}/codes/import`, async (req: any, res: any) =>
         }
       })
 
-      await code_instance.createCodes(mapped_codes as [])
+      await UserController.createCodes(mapped_codes as [])
 
       res.json({
         success: true,
@@ -168,7 +167,7 @@ router.post(`/api/${ROUTES_VERSION}/codes/import`, async (req: any, res: any) =>
 router.get(`/api/${ROUTES_VERSION}/codes/generate`, async (req: any, res: any) => {
   const { key_count, key_length } = req.query
 
-  await code_instance.generateCodes(key_count, key_length)
+  await UserController.generateCodes(key_count, key_length)
 
   res.json({
     success: true

@@ -1,12 +1,9 @@
+import QuestionController from '@/controllers/admin/question.controller'
 import { Router } from 'express'
-import { ROUTES_VERSION } from '../../../constants'
-
-import QuestionController from '../../../controllers/admin/question.controller'
+import { ROUTES_VERSION } from '@/constants'
 
 const router = Router()
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/question`
-
-const question_instance = new QuestionController()
 
 router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
   const { question_id } = req.body
@@ -19,7 +16,7 @@ router.delete(CURRENT_ROUTE, async (req: any, res: any) => {
   }
 
   try {
-    await question_instance.deleteQuestion(question_id)
+    await QuestionController.deleteQuestion(question_id)
 
     return res.json({
       success: true,

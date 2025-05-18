@@ -1,6 +1,5 @@
-import ScheduleModel from '../../models/admin/schedule.model'
-import LectureModel from '../../models/admin/lecture.model'
-
+import LectureModel from '@/models/admin/lecture.model'
+import ScheduleModel from '@/models/admin/schedule.model'
 import dayjs from 'dayjs'
 import type { schedule, lecture } from './types'
 
@@ -141,4 +140,4 @@ class ScheduleController {
   }
 }
 
-export default ScheduleController
+export default new ScheduleController()

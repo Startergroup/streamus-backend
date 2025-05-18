@@ -1,4 +1,4 @@
-import LectureViewsModel from '../../models/admin/lecture-views.model'
+import LectureViewsModel from '@/models/admin/lecture-views.model'
 
 class LectureViewsController {
   public async recordView ({ lecture_id, user_id, timestamp }: { lecture_id: number, user_id: number, timestamp: Date }) {
