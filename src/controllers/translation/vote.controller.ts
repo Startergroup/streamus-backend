@@ -1,5 +1,5 @@
-import LectureModel from '@/models/admin/lecture.model'
-import LectureViewsModel from '@/models/admin/lecture-views.model'
+import LectureModel from '@/models/admin/schedule/lecture.model'
+import LectureViewsModel from '@/models/admin/schedule/lecture-views.model'
 import VoteModel from '@/models/translation/vote.model'
 import dayjs from 'dayjs'
 import sequelize from 'sequelize'

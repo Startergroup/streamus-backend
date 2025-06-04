@@ -1,5 +1,6 @@
 import answer from './answer'
 import auth from './auth'
+import chat from './chat'
 import file from './file'
 import question from './question'
 import quiz from './quiz'
@@ -10,6 +11,7 @@ import vote from './vote'
 export default [
   answer,
   auth,
+  chat,
   file,
   question,
   quiz,

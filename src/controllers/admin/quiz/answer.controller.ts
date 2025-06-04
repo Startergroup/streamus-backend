@@ -1,5 +1,5 @@
-import AnswerModel from '@/models/admin/answers.model'
-import type { answer } from './types'
+import AnswerModel from '@/models/admin/quiz/answer.model'
+import type { answer } from '../types'
 
 class AnswerController {
   async createAnswer (answers: answer[]) {

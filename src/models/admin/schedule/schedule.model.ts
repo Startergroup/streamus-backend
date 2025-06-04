@@ -1,3 +1,4 @@
+import LectureModel from './lecture.model'
 import {
   AutoIncrement,
   Column,
@@ -7,8 +8,6 @@ import {
   HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
-import Lecture from './lecture.model'
 
 @Table({
   tableName: 'schedules',
@@ -30,12 +29,12 @@ class Schedule extends Model {
   @Column(DataTypes.STRING)
   section_name: string
 
-  @HasMany(() => Lecture, {
+  @HasMany(() => LectureModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true
   })
-  lectures: Lecture[]
+  lectures: LectureModel[]
 }
 
 export default Schedule

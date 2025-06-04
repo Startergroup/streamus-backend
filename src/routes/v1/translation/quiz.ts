@@ -1,4 +1,4 @@
-import QuizAdminController from '@/controllers/admin/quiz.controller'
+import QuizAdminController from '@/controllers/admin/quiz/quiz.controller'
 import QuizTranslationController from '@/controllers/translation/quiz.controller'
 import UserController from '@/controllers/admin/user.controller'
 import sortByTimeAndPoints from '@/utils/sort-by-time-and-points'

@@ -1,4 +1,4 @@
-import AnswerController from '@/controllers/admin/answer.controller'
+import AnswerController from '@/controllers/admin/quiz/answer.controller'
 import { Router } from 'express'
 import { ROUTES_VERSION } from '@/constants'
 

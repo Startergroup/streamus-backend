@@ -1,6 +1,8 @@
+import MessageModel from '@/models/admin/chat/message.model'
 import {
   AutoIncrement,
   Column,
+  HasMany,
   Model,
   PrimaryKey,
   Table
@@ -32,6 +34,9 @@ class User extends Model {
 
   @Column(DataTypes.DATE)
   last_activity: Date
+
+  @HasMany(() => MessageModel, 'sender_id')
+  messages?: []
 }
 
 export default User

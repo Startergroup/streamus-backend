@@ -1,8 +1,8 @@
-import AnswersModel from '@/models/admin/answers.model'
-import QuestionModel from '@/models/admin/question.model'
-import QuizModel from '@/models/admin/quiz.model'
+import AnswersModel from '@/models/admin/quiz/answer.model'
+import QuestionModel from '@/models/admin/quiz/question.model'
+import QuizModel from '@/models/admin/quiz/quiz.model'
 import QuizTranslationModel from '@/models/translation/quiz.model'
-import type { quiz } from './types'
+import type { quiz } from '../types'
 
 class QuizController {
   async getQuizzes (is_user = false, user_id: number | null = null) {

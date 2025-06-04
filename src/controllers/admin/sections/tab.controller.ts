@@ -1,10 +1,10 @@
-import TabModel from '@/models/admin/tab.model'
-import type { tab } from './types'
+import TabModel from '@/models/admin/sections/tab.model'
+import type { tab } from '../types'
 
 class TabController {
   public async createTab ({ name, url, order }: tab) {
     try {
-      await TabModel.create({
+      const tab = await TabModel.create({
         name,
         url,
         order
@@ -12,7 +12,8 @@ class TabController {
 
       return {
         success: true,
-        message: 'OK'
+        message: 'OK',
+        data: tab?.dataValues
       }
     } catch (error) {
       throw error

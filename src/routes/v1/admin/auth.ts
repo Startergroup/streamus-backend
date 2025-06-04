@@ -16,7 +16,6 @@ const {
 } = process.env
 const refresh_tokens = []
 const CURRENT_ROUTE = `/api/${ROUTES_VERSION}/admin`
-const admin_instance = new AdminController()
 
 router.post(`${CURRENT_ROUTE}/check_user`, async (req: any, res: any) => {
   const { login } = req.body
@@ -29,7 +28,7 @@ router.post(`${CURRENT_ROUTE}/check_user`, async (req: any, res: any) => {
   }
 
   try {
-    const user_salt = await admin_instance.getUserSalt(login)
+    const user_salt = await AdminController.getUserSalt(login)
 
     return res.json({
       success: true,
@@ -54,7 +53,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
   }
 
   try {
-    const is_pass_valid = await admin_instance.comparePasswordHash(login, pass)
+    const is_pass_valid = await AdminController.comparePasswordHash(login, pass)
 
     if (!is_pass_valid) {
       return res.json({
@@ -65,6 +64,7 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
       })
     }
 
+    const { data } = await AdminController.getUser(login) || {}
     const access_token = jwt.sign({ login }, (ACCESS_TOKEN_SECRET as string), { expiresIn: ADMIN_TOKEN_DURATION })
     const refresh_token = jwt.sign({ login }, (ADMIN_REFRESH_TOKEN_SECRET as string))
 
@@ -73,7 +73,8 @@ router.post(`${CURRENT_ROUTE}/login`, async (req: any, res: any) => {
     return res.json({
       success: true,
       accessToken: access_token,
-      refreshToken: refresh_token
+      refreshToken: refresh_token,
+      user: data?.dataValues
     })
   } catch (error) {
     return res.status(400).send({

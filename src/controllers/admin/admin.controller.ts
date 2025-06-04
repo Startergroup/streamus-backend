@@ -1,7 +1,7 @@
 import AdminModel from '@/models/admin/admin.model'
 
 class AdminController {
-  private async getUser (login: string) {
+  public async getUser (login: string) {
     try {
       const user = await AdminModel.findOne({
         where: {
@@ -53,4 +53,4 @@ class AdminController {
   }
 }
 
-export default AdminController
+export default new AdminController()

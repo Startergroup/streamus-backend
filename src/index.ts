@@ -1,6 +1,7 @@
 import 'tsconfig-paths/register.js'
 
-import express from 'express'
+import Express from 'express'
+import ExpressWS from 'express-ws'
 import body_parser from 'body-parser'
 import cors from 'cors'
 import file_upload from 'express-fileupload'
@@ -20,8 +21,10 @@ dotenv.config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
-const app = express()
+const app = Express() as unknown as ExpressWS.Application
 const port = Number(process.env.SERVER_PORT)
+
+ExpressWS(app)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(cors())
@@ -32,15 +35,14 @@ app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 
 const routes = [...AdminRoutes, ...TranslationRoutes]
-
 routes.forEach(route => {
   app.use(route)
 })
 
-app.use(express.static('/root/startergroup-backend/public'))
+app.use(Express.static('/root/startergroup-backend/public'))
 
 app.listen(port, async () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  console.log(`➜ 🎸 Server is listening on port: ${port}`)
 
   const {
     POSTGRES_USER,

@@ -1,5 +1,5 @@
-import QuestionModel from '@/models/admin/question.model'
-import type { question } from './types'
+import QuestionModel from '@/models/admin/quiz/question.model'
+import type { question } from '../types'
 
 class QuestionController {
   async createQuestion (questions: question[]) {

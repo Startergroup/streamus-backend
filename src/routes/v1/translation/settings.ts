@@ -1,4 +1,4 @@
-import SettingsController from '@/controllers/admin/settings.controller'
+import SettingsController from '@/controllers/admin/sections/settings.controller'
 import { Router} from 'express'
 import { ROUTES_VERSION } from '@/constants'
 

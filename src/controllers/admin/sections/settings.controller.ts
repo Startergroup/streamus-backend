@@ -1,5 +1,5 @@
-import SettingsModel from '@/models/admin/settings'
-import type { settings } from './types'
+import SettingsModel from '@/models/admin/sections/settings'
+import type { settings } from '../types'
 
 class SettingsController {
   public async getSettings () {

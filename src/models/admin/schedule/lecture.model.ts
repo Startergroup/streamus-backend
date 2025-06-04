@@ -1,3 +1,5 @@
+import LectureViewsModel from './lecture-views.model'
+import ScheduleModel from './schedule.model'
 import {
   Table,
   Model,
@@ -8,9 +10,6 @@ import {
   HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
-import LectureViews from './lecture-views.model'
-import Schedule from './schedule.model'
 
 
 @Table({
@@ -24,7 +23,7 @@ class Lecture extends Model {
   @Column(DataTypes.INTEGER)
   lecture_id: number
 
-  @ForeignKey(() => Schedule)
+  @ForeignKey(() => ScheduleModel)
   @Column(DataTypes.INTEGER)
   schedule_id: number
 
@@ -49,12 +48,12 @@ class Lecture extends Model {
   @Column(DataTypes.BOOLEAN)
   is_votable: boolean
 
-  @HasMany(() => LectureViews, {
+  @HasMany(() => LectureViewsModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true
   })
-  views: LectureViews[]
+  views: LectureViewsModel[]
 }
 
 export default Lecture

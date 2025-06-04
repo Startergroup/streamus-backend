@@ -1,3 +1,4 @@
+import QuestionModel from './question.model'
 import {
   Table,
   Model,
@@ -7,8 +8,6 @@ import {
   HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
-import Question from './question.model'
 
 @Table({
   tableName: 'quizzes',
@@ -39,12 +38,12 @@ class Quiz extends Model {
   @Column(DataTypes.STRING)
   background: string
 
-  @HasMany(() => Question, {
+  @HasMany(() => QuestionModel, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     hooks: true
   })
-  questions: Question[]
+  questions: QuestionModel[]
 }
 
 export default Quiz

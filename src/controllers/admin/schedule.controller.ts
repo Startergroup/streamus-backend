@@ -1,5 +1,5 @@
-import LectureModel from '@/models/admin/lecture.model'
-import ScheduleModel from '@/models/admin/schedule.model'
+import LectureModel from '@/models/admin/schedule/lecture.model'
+import ScheduleModel from '@/models/admin/schedule/schedule.model'
 import dayjs from 'dayjs'
 import type { schedule, lecture } from './types'
 

@@ -1,5 +1,11 @@
-import {AutoIncrement, Column, Model, PrimaryKey, Table} from 'sequelize-typescript'
-import {DataTypes} from "sequelize";
+import {
+  AutoIncrement,
+  Column,
+  Model,
+  PrimaryKey,
+  Table
+} from 'sequelize-typescript'
+import { DataTypes } from 'sequelize'
 
 @Table({
   tableName: 'quiz',

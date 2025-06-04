@@ -1,5 +1,5 @@
-import AnswerModel from '@/models/admin/answers.model'
-import QuestionModel from '@/models/admin/question.model'
+import AnswerModel from '@/models/admin/quiz/answer.model'
+import QuestionModel from '@/models/admin/quiz/question.model'
 import QuizModel from '@/models/translation/quiz.model'
 import type { answer, quiz } from './types'
 

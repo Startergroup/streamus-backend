@@ -1,4 +1,5 @@
-import TabController from '@/controllers/admin/tab.controller'
+import ChatController from '@/controllers/admin/chat/chat.controller'
+import TabController from '@/controllers/admin/sections/tab.controller'
 import { Router } from 'express'
 import { ROUTES_VERSION } from '@/constants'
 
@@ -42,9 +43,18 @@ router.post(CURRENT_ROUTE, async (req: any, res: any) => {
       })
     }
 
-    const response = await TabController.createTab({ name, url, order })
+    const {
+      success,
+      message,
+      data
+    } = await TabController.createTab({ name, url, order }) || {}
 
-    res.json(response)
+    await ChatController.createChat(data?.tab_id)
+
+    res.json({
+      success,
+      message
+    })
   } catch (error) {
     res.status(400).send(error)
   }

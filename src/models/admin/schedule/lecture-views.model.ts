@@ -1,3 +1,4 @@
+import LectureModel from './lecture.model'
 import {
   AutoIncrement,
   Column,
@@ -7,8 +8,6 @@ import {
   Table
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
-import Lecture from './lecture.model'
 
 @Table({
   tableName: 'lecture-views',
@@ -21,7 +20,7 @@ class LectureViews extends Model {
   @Column(DataTypes.INTEGER)
   override id: number
 
-  @ForeignKey(() => Lecture)
+  @ForeignKey(() => LectureModel)
   @Column(DataTypes.INTEGER)
   lecture_id: number
 
