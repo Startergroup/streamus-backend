@@ -20,7 +20,7 @@ router.get(CURRENT_ROUTE, async (_req: any, res: any) => {
 
 router.put(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
-    const { settings_id, title_ru, subtitle_ru, title_en, subtitle_en, favicon } = req.body
+    const { settings_id, title_ru, subtitle_ru, title_en, subtitle_en, favicon, logo } = req.body
 
     if (!settings_id) {
       return res.status(400).send({
@@ -35,7 +35,8 @@ router.put(CURRENT_ROUTE, async (req: any, res: any) => {
       subtitle_ru,
       title_en,
       subtitle_en,
-      favicon
+      favicon,
+      logo
     })
 
     res.json(response)

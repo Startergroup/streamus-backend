@@ -32,6 +32,9 @@ class Settings extends Model {
 
   @Column(DataTypes.STRING)
   favicon: string
+
+  @Column(DataTypes.STRING)
+  logo: string
 }
 
 export default Settings

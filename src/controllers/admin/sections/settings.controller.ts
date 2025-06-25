@@ -12,7 +12,8 @@ class SettingsController {
           subtitle_ru: '',
           title_en: '',
           subtitle_en: '',
-          favicon: ''
+          favicon: '',
+          logo: ''
         })
 
         return settings.dataValues
@@ -24,14 +25,15 @@ class SettingsController {
     }
   }
 
-  public async updateSettings ({ settings_id, title_ru = null, subtitle_ru = null, title_en = null, subtitle_en = null, favicon = null }: settings) {
+  public async updateSettings ({ settings_id, title_ru = null, subtitle_ru = null, title_en = null, subtitle_en = null, favicon = null, logo = null }: settings) {
     try {
       await SettingsModel.update({
         title_ru,
         subtitle_ru,
         title_en,
         subtitle_en,
-        favicon
+        favicon,
+        logo
       }, {
         returning: true,
         where: {

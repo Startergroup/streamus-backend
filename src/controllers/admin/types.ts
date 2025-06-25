@@ -54,7 +54,8 @@ type settings = {
   subtitle_ru?: string | null,
   title_en?: string | null,
   subtitle_en?: string | null,
-  favicon?: string | null
+  favicon?: string | null,
+  logo?: string | null
 }
 
 type vote = {
